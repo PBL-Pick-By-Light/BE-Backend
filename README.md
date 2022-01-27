@@ -116,3 +116,7 @@ Execute tests defined in [tests](src/tests/testdata)
 ```
 NODE_ENV=test npm run test
 ``` 
+
+## License
+
+[Apache License 2.0](https://www.tldrlegal.com/l/apache2)
