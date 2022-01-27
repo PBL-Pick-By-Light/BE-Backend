@@ -1,0 +1,18 @@
+{
+    "itemSketches": [
+        {
+        "de":"Excalibur",
+        "en":"Excalibur",
+        "descriptionEn": "Strange women lying in ponds distributing swords is still no basis for a system of government!",
+        "descriptionDe":  "taucht in einer Menge Geschichten auf",
+        "countable" : true
+        },
+        {
+        "en":"Shards of Narsil",
+        "de": "Splitter Narsils",
+        "descriptionEn":"Are known and respected Ladies magically reforging traditional symbols of kingship before distributing them a better basis of goverment?",
+        "descriptionDe": "Einst ein mächtiges Schwert. Jetzt Artefakt einer Tragödie.",
+        "countable": false
+        }
+    ]
+}

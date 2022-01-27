@@ -1,0 +1,57 @@
+###
+
+GET http://localhost:3000/labels/getAll
+sessionid: 1111
+cuid: system
+
+###
+
+POST http://localhost:3000/labels/create
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "name": {"en":"silver", "de":"Silber"},
+    "colour": "#880000"
+}
+###
+
+POST http://localhost:3000/labels/update/61e98b732d3bf61c3f4d1e62
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "name": {"en":"gold", "de":"Gold"},
+    "colour": "#00FF00"
+}
+
+###
+
+DELETE http://localhost:3000/labels/delete/61e98b732d3bf61c3f4d1e62
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+
+
+###
+
+GET http://localhost:3000/labels/findById/619f49dc3acf18936524b7ed
+Content-Type: application/json
+sessionid: 1111
+
+
+###
+
+GET http://localhost:3000/labels/findByItemId/61e98b182d3bf61c3f4d1e5f
+Content-Type: application/json
+sessionid: 1111
+
+
+###
+
+GET http://localhost:3000/labels/findIdsByItemId/61e98b182d3bf61c3f4d1e5f
+Content-Type: application/json
+sessionid: 1111
+
+###

@@ -1,0 +1,24 @@
+
+POST http://localhost:3000/light/turnOn
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+{
+  "itemId": "61eac6941715355695cc17cd",
+  "duration": 8,
+  "color": "#2a33FF"
+}
+
+###
+
+POST http://localhost:3000/light/turnOff
+sessionid: 1111
+Content-Type: application/json
+cuid: system
+
+{
+  "itemId": "61eac6941715355695cc17cd"
+}
+
+###

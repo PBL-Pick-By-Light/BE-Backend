@@ -1,0 +1,24 @@
+
+GET http://localhost:3000/languages/getAll
+sessionid: 1111
+cuid: system
+
+###
+
+GET http://localhost:3000/languages/getRequired
+sessionid: 1111
+cuid: system
+
+###
+
+GET http://localhost:3000/languages/findById/61e5946e9f094278582eda5d
+sessionid: 1111
+cuid: system
+
+###
+DELETE http://localhost:3000/languages/delete/61baf57b28a293271399c150
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+###

@@ -1,0 +1,16 @@
+{
+  "dbName" : "pblBackendDB",
+  "PORT" : "3000",
+  "debug" : "false",
+  "embeddedServer": {
+    "URL" : "http://127.0.0.1",
+    "PORT" : "5000",
+    "PATH" : "enableLED"
+  },
+  "ldapConstants": {
+    "url" : "ldap://ldap.fh-giessen.de",
+    "searchBase" : "dc=fh-giessen-friedberg,dc=de",
+    "dnBase" : "ou=People,ou=MNI,ou=Giessen,dc=fh-giessen-friedberg,dc=de",
+    "dnAttribute" : "uid"
+  }
+}

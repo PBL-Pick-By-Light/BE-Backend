@@ -1,0 +1,16 @@
+version: '3.0'
+services:
+  mongo:
+    image: mongo
+    container_name: pbl_mongo
+    ports:
+      - "27017:27017"
+  node:
+    build: .
+    container_name: pbl_node
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - "NODE_ENV=${NODE_ENV}"

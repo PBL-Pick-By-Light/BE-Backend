@@ -1,0 +1,12 @@
+{
+"languageSketches": [
+  {
+    "lang": "de",
+    "required": true
+  },
+  {
+    "lang": "en",
+    "required": true
+  }
+]
+}

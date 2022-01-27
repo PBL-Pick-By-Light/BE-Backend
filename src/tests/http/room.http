@@ -1,0 +1,43 @@
+###
+
+POST http://localhost:3000/rooms/create
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "name": {"de":"doppelt","en":"duplikate"},
+    "ipAddress": "242.183.90.108"
+}
+
+###
+
+GET http://localhost:3000/rooms/getAll
+sessionid: 1111
+cuid: system
+
+###
+
+GET http://localhost:3000/rooms/findById/61e98d7a2d3bf61c3f4d1e7e
+sessionid: 1111
+cuid: system
+
+###
+
+POST http://localhost:3000/rooms/update/61e98d7a2d3bf61c3f4d1e7e
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "name": {"de":"B45.9.84","en":"B45.9.84"},
+    "ipAddress": "172.16.0.9"
+}
+
+###
+
+DELETE http://localhost:3000/rooms/delete/61a4fc40f2eee8bdcf883128
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+###
+GET http://h2955127.stratoserver.net:3000/

@@ -1,0 +1,35 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "password": "test1"
+}
+
+###
+
+POST http://localhost:3000/auth/logout
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NDMxOTI2MjAsImV4cCI6MTY0Njc5MjYyMH0.wcMtkeYbWM1OTRE3xKn2g4blLk5UQQy_jwdkSfzD4LA
+
+{}
+
+###
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "password": "test1",
+    "role": "admin"
+}
+
+###
+
+DELETE http://localhost:3000/auth/delete/61f11cd25d546d2699bf4c1c
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NDMxOTI2MjAsImV4cCI6MTY0Njc5MjYyMH0.wcMtkeYbWM1OTRE3xKn2g4blLk5UQQy_jwdkSfzD4LA
+
+{
+}

@@ -1,0 +1,16 @@
+{
+    "userSketches": [
+        {
+            "name": "user1",
+            "password": "c63bbcadd63e0f0027ae949825f5dd59fc80d6631bdf7d619c986fcd3b8309dc9035d6ea9d50722fe6880de23a522dd67989bfe1db74c4bb5013724c0ababad8",
+            "salt" : "cb8c8996bdf05f8b9a0d2c1f26afad04",
+            "role": "editor"
+        },
+        {
+            "name": "user2",
+            "password": "1fa4487404fc46a8c4afeed370e84eeaf9148a90d2ee5476f145d03700507537a02b81daca2e41b4972478d45ead4c0ba3885f2da9691a24dc2debda82f3052a",
+            "salt": "00a4ab8a043121e45c0748a5a5d63ad4",
+            "role": "admin"
+        }
+    ]
+}

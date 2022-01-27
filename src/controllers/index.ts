@@ -1,0 +1,25 @@
+import {MongoModule} from "../modules/mongo/mongo.module";
+import { ItemController } from './item.controller';
+import { AuthController } from './auth.controller';
+import { ShelfController } from './shelf.controller';
+import { RoomController } from './room.controller';
+import { LabelController } from './label.controller';
+import {PositionController} from "./position.controller";
+import {LanguageController} from "./language.controller";
+import {LightController} from "./light.controller";
+import {LDAPModule} from "../modules/auth/ldap.module";
+import {UserController} from "./user.controller";
+import { SettingsController } from './settings.controller';
+
+const ldap:LDAPModule = new LDAPModule();
+const mongo: MongoModule = new MongoModule();
+export const languageController = new LanguageController(mongo);
+export const itemController = new ItemController(mongo);
+export const authController = new AuthController(mongo, ldap);
+export const shelfController = new ShelfController(mongo);
+export const roomController = new RoomController(mongo);
+export const labelController = new LabelController(mongo);
+export const positionController = new PositionController(mongo);
+export const userController = new UserController(mongo);
+export const lightController = new LightController(mongo);
+export const settingsController = new SettingsController(mongo);

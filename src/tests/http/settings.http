@@ -1,0 +1,18 @@
+
+GET http://localhost:3000/settings
+sessionid: 1111
+cuid: system
+
+###
+
+POST http://localhost:3000/settings/update
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "language": "61e5946e9f094278582eda5d",
+    "colors": [
+        "#fefefe",
+        "#010101"
+    ]
+}

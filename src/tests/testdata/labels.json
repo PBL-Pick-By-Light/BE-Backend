@@ -1,0 +1,60 @@
+{
+    "labelSketches": [
+        {
+
+            "en": "weapons",
+            "de": "Waffen",
+            "colour": "#6f7378"
+        },
+        {
+            "en": "magical objects",
+            "de":  "magische Gegenstände",
+            "colour": "#1f7370"
+        },
+        {
+            "en": "needs reforging",
+            "de":  "muss repariert werden",
+            "colour": "#3f0370"
+        },
+        {
+            "de": "Mutter",
+            "en": "nut",
+            "colour": "#6f7370"
+        },
+        {
+            "de":"Mikrokontroller",
+            "en": "microcontroller",
+            "colour": "#7f7378"
+        },
+        {
+            "de":"Netzteil",
+            "en": "power adapter",
+            "colour": "#6f7f78"
+        },
+        {
+            "de":"Batterie",
+            "en":  "battery",
+            "colour": "#6f3374"
+        },
+        {
+            "de": "Temperatursensor",
+            "en":  "temperature sensor",
+            "colour": "#6f8388"
+        },
+        {
+            "de":"LED-Matrix",
+            "en":  "LED matrix",
+            "colour": "#6a73aa"
+        },
+        {
+            "de": "Klammern",
+            "en":  "clips",
+            "colour": "#cf7378"
+        },
+        {
+            "de":  "Hülle",
+            "en":  "cover",
+            "colour": "#efe37e"
+        }
+    ]
+}

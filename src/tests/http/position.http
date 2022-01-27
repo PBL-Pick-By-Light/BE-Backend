@@ -1,0 +1,63 @@
+
+### successful request Create
+POST http://localhost:3000/positions/create
+Content-Type: application/json
+sessionid: 1111
+
+{
+  "itemId": "61aa035a4ed33296223c7fa2",
+  "number": 15,
+  "quantity": null,
+  "shelfId": "61aa044991d9696f25724205"
+}
+
+
+###
+POST http://localhost:3000/positions/update/61e98cd22d3bf61c3f4d1e73
+Content-Type: application/json
+sessionid: 1111
+
+{
+  "itemId": "61b0a070eeeb7e98d68d79c5",
+  "number": 15,
+  "quantity": null,
+  "shelfId": "61aa044991d9696f25724205"
+}
+
+###
+GET http://localhost:3000/positions/findById/61e98cd22d3bf61c3f4d1e73
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+
+###
+
+###
+GET http://localhost:3000/positions/findByItemId/61ac8cc7b612be6cfdcd8559
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+{
+}
+###
+
+GET http://localhost:3000/positions/getAll
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+{
+}
+
+###
+
+DELETE http://localhost:3000/positions/delete/61e98cd22d3bf61c3f4d1e73
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+{
+}
+

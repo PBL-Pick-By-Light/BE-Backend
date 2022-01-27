@@ -1,0 +1,42 @@
+###
+
+POST http://localhost:3000/shelves/create
+Content-Type: application/json
+sessionid: 1111
+
+{
+  "number": 3,
+  "roomId": "61e98d7a2d3bf61c3f4d1e7e"
+}
+
+###
+
+GET http://localhost:3000/shelves/getAll
+sessionid: 1111
+cuid: system
+
+###
+
+GET http://localhost:3000/shelves/findById/61f15ae7be0cf059cc97ecac
+sessionid: 1111
+cuid: system
+
+###
+
+POST http://localhost:3000/shelves/update/61e98eec2d3bf61c3f4d1e84
+Content-Type: application/json
+sessionid: 1111
+
+{
+  "number": 4,
+  "roomID": "619a510c66d93b8c0b54f390"
+}
+
+###
+
+DELETE http://localhost:3000/shelves/delete/61f15ae7be0cf059cc97ecac
+Content-Type: application/json
+sessionid: 1111
+cuid: system
+
+

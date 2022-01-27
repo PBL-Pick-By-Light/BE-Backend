@@ -1,0 +1,19 @@
+{
+    "roomSketches": [
+        {
+            "en":"hall of fire, Rivendell",
+            "de":  "Halle des Feuers, Bruchtal",
+            "ipAddress": "127.0.0.2"
+        },
+        {
+            "en":"throne room, Camelot",
+            "de":  "Thronsaal, Camelot",
+            "ipAddress": "127.0.0.1"
+        },
+        {
+            "en":"A12.0.0.7",
+            "de":  "A12.0.0.7",
+            "ipAddress": "127.0.0.3"
+        }
+    ]
+}
