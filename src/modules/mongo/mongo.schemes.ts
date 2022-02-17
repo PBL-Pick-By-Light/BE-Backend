@@ -44,7 +44,7 @@ export const roomSchema = new Schema<Room>({
  */
 export const shelfSchema = new Schema<Shelf>({
     number: {type: Number, required: true},
-    roomId: {type: Schema.Types.ObjectId, required: true}
+    roomId: {type: mongoose.Types.ObjectId, required: true}
 });
 
 /**
@@ -55,8 +55,14 @@ export const userSchema = new Schema<User> ({
     jwt: { type: String, required: false },
     name: { type: String, required: true, unique: true},
     password: {type: String, required: true},
-    salt: {type: String, required: true},
+    salt: {type: String, required: false },
+    firstname: {type: String, required: false},
+    lastname: {type: String, required: false},
+    email: {type: String, required: false},
+    searchColor: {type: String, required: false},
+    language: {type: String, required: false},
     role: { type: String, required: true}
+
 });
 
 /**
@@ -64,10 +70,10 @@ export const userSchema = new Schema<User> ({
  * create a positionSchema corresponding to the document Position interface
  */
 export const positionSchema = new Schema<Position>({
-    itemId: {type: Schema.Types.ObjectId, required: false},
+    itemId: {type: mongoose.Types.ObjectId, required: false},
     number: {type: Number, required: true},
     quantity: {type: Number, required: false},
-    shelfId: {type: Schema.Types.ObjectId, required: true}
+    shelfId: {type: mongoose.Types.ObjectId, required: true}
 });
 
 /**

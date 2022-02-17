@@ -2,11 +2,8 @@
   "dbName" : "pblBackendDB",
   "PORT" : "3000",
   "debug" : "false",
-  "embeddedServer": {
-    "URL" : "http://127.0.0.1",
-    "PORT" : "5000",
-    "PATH" : "enableLED"
-  },
+  "disableLDAP" : "false",
+  "embeddedPORT" : "8000",
   "ldapConstants": {
     "url" : "ldap://ldap.fh-giessen.de",
     "searchBase" : "dc=fh-giessen-friedberg,dc=de",

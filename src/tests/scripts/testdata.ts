@@ -153,6 +153,116 @@ export class TestData {
             })
     }
 
+    /**
+     * Add some Testdata into DB
+     */
+    public async addESTestData(exitWhenDone: boolean) {
+        const mongo: MongoModule = new MongoModule();
+        const labelMod = new LabelModule(mongo);
+        const userMod = new UserModule(mongo);
+        const itemMod = new ItemModule(mongo);
+        const shelfMod = new ShelfModule(mongo);
+        const positionMod = new PositionModule(mongo);
+        const roomMod = new RoomModule(mongo);
+        const languageMod = new LanguageModule(mongo);
+        const settingsMod = new SettingsModule(mongo);
+        /// CREATE CHAIN OF ROOM <- SHELF <- POSITION -> ITEM
+        // for tests with ES
+        //
+        mongo.connectToMongo().then(
+            async _ => {
+
+            let esLabelId = await labelMod.createLabel({
+                name : new Map<string, string>().set("en","Nail").set("de", "Schraube")
+            })
+            let esLabelId2 = await labelMod.createLabel({
+                name : new Map<string, string>().set("en","Microcontroller").set("de", "Mikrocontroller")
+            })
+            let esItemId;
+            let esItemId2;
+            let esItemId3;
+            let esShelfId;
+            let esRoomId = await roomMod.createRoom({
+                name: new Map<string, string>().set("en", "Room 01").set("de", "Raum 01"),
+                //ipAddress: "192.168.1.131"
+                ipAddress: "127.0.0.1"
+            })
+            if(esRoomId) {
+                esShelfId = await shelfMod.createShelf({
+                    number: 2,
+                    roomId: esRoomId
+                })
+            }
+            if(esLabelId){
+                esItemId = await itemMod.createItem({
+                    name : new Map<string, string>().set("en", "Nail 4711").set( "de","Schraube 4711"),
+                    description : new Map<string, string>().set("en", "Nail for hanging up things").set("de","Nagel, um Dinge aufzuhängen"),
+                    countable : true,
+                    labelIds : [esLabelId]
+                })
+                esItemId2 = await itemMod.createItem({
+                    name : new Map<string, string>().set("en", "Nail 2398").set( "de","Schraube 2389"),
+                    description : new Map<string, string>().set("en", "Nail for hanging up things").set("de","Nagel, um Dinge aufzuhängen"),
+                    countable : true,
+                    labelIds : [esLabelId]
+                })
+            }
+            if (esLabelId2){
+                esItemId3 = await itemMod.createItem({
+                    name : new Map<string, string>().set("en", "Arduino Nano BLE").set( "de","Arduino Nano BLE"),
+                    description : new Map<string, string>().set("en", "Smallest available Board").set("de","Kleinster verfügbarer Mikrocontroller"),
+                    countable : true,
+                    labelIds : [esLabelId2]
+                })
+            }
+            if(esShelfId && esItemId && esItemId2 && esItemId3) {
+                await positionMod.createPosition({
+                    itemId: esItemId,
+                    number: 103,
+                    quantity: 2,
+                    shelfId: esShelfId
+                })
+                await positionMod.createPosition({
+                    itemId: esItemId,
+                    number: 100,
+                    quantity: 2,
+                    shelfId: esShelfId
+                })
+                await positionMod.createPosition({
+                    itemId: esItemId2,
+                    number: 101,
+                    quantity: 7,
+                    shelfId: esShelfId
+                })
+                await positionMod.createPosition({
+                    itemId: esItemId3,
+                    number: 102,
+                    quantity: 3,
+                    shelfId: esShelfId
+                })
+            }
+            //
+                // languages
+            // creates languages
+            for (const languageSketch of languageSketches) {
+                await languageMod.createLanguage(new LanguageClass(languageSketch.lang, languageSketch.required))
+            }
+
+            if (esItemId) {
+               console.log("\n********\n ES TEST ITEM ID IS\n" + esItemId + "\n**********")
+            } else {
+                console.log("\n********\n ES TEST ITEM ID CREATION FAILED\n**********")
+            }
+            if (exitWhenDone) process.exit();
+        }).finally( () => {
+
+                printToConsole("[+] Inserted Data to MongoDB");
+                if (exitWhenDone) process.exit();
+        })
+
+    }
+
+
     async removeTestData() {
         const mongo: MongoModule = new MongoModule();
         mongo.connectToMongo().then(

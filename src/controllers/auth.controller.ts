@@ -8,6 +8,7 @@ import { hashString } from "../modules/auth";
 import { LDAPModule} from  "../modules/auth/ldap.module";
 import mongoose from "mongoose";
 import { printToConsole } from "../modules/util/util.module";
+import config from 'config';
 
 export class AuthController {
     userModule: UserModule;
@@ -19,13 +20,13 @@ export class AuthController {
     }
 
     public loginLDAP(req: Request, res: Response): void {
-        const user = this.verifyCredentials(req.body)
-        /* TODO: Should be checked if connection to ldap server
-           is possible so no timeout exception is thrown,
-           currently a timeout exeption is awaited
-           Not sure if this is possible with ldap-authentication
-           but i've seen ldap-authentication is build upon ldapjs
-           maybe ldapjs could be used directly instead */
+
+        if (config.get('disableLDAP') == "true"){
+            this.login(req, res);
+            return
+        }
+
+        const user = req.body.name.trim()
         this.ldapModule.verify(user.name, user.password).then(isValid => {
             if (!isValid) {
                 this.login(req, res)
@@ -40,6 +41,7 @@ export class AuthController {
                 })
             }
         }).catch((err:any) => {
+            printToConsole(err)
             this.login(req, res)
         })
     }
@@ -51,23 +53,35 @@ export class AuthController {
      * @param {Response} res data send back to user
      */
     public login(req: Request, res: Response): void {
-        const jsonUser = this.verifyCredentials(req.body)
-        this.userModule.getUserByName(jsonUser.name)
+        const jsonUser = req.body.name
+        if (!jsonUser || jsonUser == ""){
+            res.status(400).send("Username missing")
+            return
+        }
+        const password = req.body.password
+        if (!password || password == ""){
+            res.status(400).send("Password missing")
+            return
+        }
+        this.userModule.getUserByName(jsonUser)
         .then((user) => {
-            if (user === null) {
-                throw new Error("Wrong Credentials")
+            if (user === null ) {
+                res.status(403).send("Wrong Credentials")
+                return
             } else {
                 user._id && this.userModule.removeJWT(user._id)
-                hashString.encode(jsonUser.password, user.salt)
+                const salt: string = user.salt!
+                hashString.encode(password.trim(), salt)
                 .then((generatedHash) => {
                     if (generatedHash == user.password) {
-                        const token = jwt.sign({"name": jsonUser.name}, jwtkey, {
+                        const token = jwt.sign({"name": jsonUser}, jwtkey, {
                             expiresIn: expirationTime
                         })
                         res.status(200)
                         res.send({
                             "method": "local",
-                            "token": token
+                            "token": token,
+                            "role" : user.role
                         })
                     } else {
                         res.status(403)
@@ -79,12 +93,14 @@ export class AuthController {
             }
         })
         .catch((err:any) => {
+            printToConsole(err)
             res.status(403)
             res.send({
                 "message": "Wrong Credentials",
             })
         })
     }
+
 
     /**
      * This function verifies the sent data for
@@ -95,16 +111,28 @@ export class AuthController {
      */
     public register(req: Request, res: Response): void {
         const salt = hashString.getSalt()
-        const user = this.verifyCredentials(req.body)
-        user.role = this.verifyRole(req.body.role)
-        if(user == null) return
-        hashString.encode(user.password, salt).then((passwordHash) => {
+        const userName = req.body.name
+        if (!userName || userName == ""){
+            res.status(400).send("Username missing")
+            return
+        }
+        const password = req.body.password
+        if (!password || password == ""){
+            res.status(400).send("Password missing")
+            return
+        }
+        hashString.encode(password.trim(), salt).then((passwordHash) => {
             this.userModule.createUser(
                 new UserClass(
-                    user.name,
-                    salt,
+                    userName.trim(),
                     passwordHash,
-                    user.role
+                    "user",
+                    salt,
+                    req.body.firstname,
+                    req.body.lastname,
+                    req.body.email,
+                    req.body.searchColor,
+                    req.body.language
                 )
             ).then((id) => {
                 res.status(201).send(id)
@@ -117,85 +145,6 @@ export class AuthController {
                 })
             })
         })
-    }
-
-    /**
-     * This function verifies the json data passed to it
-     * only validated the passed in username and passwords
-     * @param {*} jsonUser passed in json object from frontend
-     * @returns {*} {User} returns verified user object
-     */
-    private verifyCredentials(jsonUser: any) : User {
-        let user = {
-            name: '', 
-            password: '', 
-            jwt: '', 
-            role: ''
-        } as User
-        user.name = this.verifyUsername(jsonUser.name)
-        user.password = this.verifyPassword(jsonUser.password)
-        return user
-    }
-
-    /**
-     * This function verifies the json property passed to it
-     * @param username passed in object from Json
-     * @returns string username verified or throws error
-     */
-    private verifyUsername(username: any): string {
-        let verifiedUsername: string
-        if (typeof username === 'string') {
-            verifiedUsername = username
-            return verifiedUsername
-        } else {
-            throw new Error('No name Provided')
-        }
-    }
-
-    /**
-     * This function verifies the json property passed to it
-     * @param password passed in object from Json
-     * @returns string password verified or throws error
-     */
-    private verifyPassword(password: any): string {
-        let verifiedPassword: string
-        if (typeof password === 'string') {
-            verifiedPassword = password
-            return verifiedPassword
-        } else {
-            throw new Error('No password Provided')
-        }
-    }
-
-    /**
-     * This function verifies the json property passed to it
-     * @param jwtString passed in object from Json
-     * @returns string jwtString verified or throws error
-     */
-    private verifyJwt(jwtString: any): string {
-        let verifiedJwt: string
-        if (typeof jwtString === 'string') {
-            verifiedJwt = jwtString
-            printToConsole(jwt.verify(verifiedJwt, jwtkey))
-            return verifiedJwt
-        } else {
-            throw new Error('No jwt Provided')
-        }
-    }
-
-    /**
-     * This function verifies the json property passed to it
-     * @param role passed in object from Json
-     * @returns string role verified or throws error
-     */
-    private verifyRole(role: any): string {
-        let verifiedRole: string
-        if (typeof role === 'string') {
-            verifiedRole = role
-            return verifiedRole
-        } else {
-            throw new Error('No admin state Provided')
-        }
     }
 
     /**

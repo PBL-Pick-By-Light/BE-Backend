@@ -31,6 +31,7 @@ export class RoomController extends CrudController {
         if (!(isValidLanguageMap(name) && req.body.ipAddress && /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/.test(req.body.ipAddress))) {
             printToConsole("Room incomplete (missing name or invalid ipAddress)")
             res.sendStatus(400)
+            return
         }
         if (name) {
             this.roomModule.createRoom(new RoomClass(req.body.ipAddress, name)).then((id: mongoose.Types.ObjectId | null) => {
@@ -39,6 +40,7 @@ export class RoomController extends CrudController {
                 } else {
                     res.status(201).send(id);
                 }
+                return
             }).catch((err) => {
                 if (err === 11000) { // duplikate error
                     res.status(400).send("duplikate")
@@ -46,6 +48,7 @@ export class RoomController extends CrudController {
                     printToConsole(err);
                     res.sendStatus(500);
                 }
+                return
             });
         }
     }
@@ -87,15 +90,14 @@ export class RoomController extends CrudController {
      * @param res
      */
     public update(req: Request, res: Response): void {
-        const id = req.params;
+        const id   = req.params.id;
         let name = fromJson(req.body.name)
-        let mongoose = require('mongoose');
         if (!(isValidLanguageMap(name) && req.body.ipAddress && /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/.test(req.body.ipAddress))) {
             printToConsole("Room incomplete (missing name or ipAddress)")
             res.sendStatus(400)
         }
         if (name) {
-            this.roomModule.updateRoomById(mongoose.Types.ObjectId(id), new RoomClass(req.body.ipAddress, name)).then((result: Room | null) => {
+            this.roomModule.updateRoomById(new mongoose.Types.ObjectId(id), new RoomClass(req.body.ipAddress, name)).then((result: Room | null) => {
                 if (result) {
                     res.status(200).contentType('json').send(result);
                     printToConsole(result);
@@ -123,8 +125,7 @@ export class RoomController extends CrudController {
      */
     public delete(req: Request, res: Response): void {
         const id = req.params.id;
-        let mongoose = require('mongoose');
-        this.roomModule.deleteRoomById(mongoose.Types.ObjectId(id)).then((result: Room | null) => {
+        this.roomModule.deleteRoomById(new mongoose.Types.ObjectId(id)).then((result: Room | null) => {
             res.status(200).contentType('json').send(result);
         }).catch((err) => {
             printToConsole(err);

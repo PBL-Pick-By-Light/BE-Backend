@@ -9,4 +9,15 @@ import {router as lightRouter} from "./light.router"
 import {router as userRouter} from "./user.router"
 import {router as settingsRouter} from "./settings.router"
 
-export {authRouter, itemRouter, roomRouter, shelfRouter, labelRouter, positionRouter, languageRouter, lightRouter, userRouter, settingsRouter}
+export {
+    authRouter,
+    itemRouter,
+    roomRouter,
+    shelfRouter,
+    labelRouter,
+    positionRouter,
+    languageRouter,
+    lightRouter,
+    userRouter,
+    settingsRouter
+}

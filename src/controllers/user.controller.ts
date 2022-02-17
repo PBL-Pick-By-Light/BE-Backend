@@ -1,9 +1,10 @@
 import {Request, Response} from "express";
 import {CrudController} from './crud.controller';
-import {User} from "../models/user.model";
+import { User, UserClass} from "../models/user.model";
 import {MongoModule} from "../modules/mongo/mongo.module";
 import {UserModule} from "../modules/entities/user.module";
 import {printToConsole} from "../modules/util/util.module";
+import { hashString } from "../modules/auth";
 import mongoose from "mongoose";
 
 
@@ -28,9 +29,36 @@ export class UserController extends CrudController {
      * if successful, the id of the newly created User document.
      */
     public create(req: Request, res: Response): void {
-        if (req.body.name.trim() !== undefined && req.body.name.trim() !== "" && req.body.password.trim() !== undefined && req.body.password.trim() !== "" && req.body.role.trim() !== undefined && req.body.role.trim() !== "" &&
-            ((req.body.role.trim() === "Admin") || (req.body.role.trim() === "Editor") || (req.body.role.trim() === "User"))) {
-            this.userModule.createUser(req.body).then((id: mongoose.Types.ObjectId | null) => {
+        const salt = hashString.getSalt()
+        if (!["user","editor","admin"].includes(req.body.role.trim())){
+            res.status(400).send("Incorrect role")
+            return
+        }
+        const role = req.body.role
+        const userName = req.body.name
+        if (!userName || userName == ""){
+            res.status(400).send("Username missing")
+            return
+        }
+        const password = req.body.password
+        if (!password || password == ""){
+            res.status(400).send("Password missing")
+            return
+        }
+        hashString.encode(password.trim(), salt).then((passwordHash) => {
+            this.userModule.createUser(
+                new UserClass(
+                    userName.trim(),
+                    passwordHash,
+                    "user",
+                    salt,
+                    req.body.firstname,
+                    req.body.lastname,
+                    req.body.email,
+                    req.body.searchColor,
+                    req.body.language
+                )
+            ).then((id: mongoose.Types.ObjectId | null) => {
                 if (id) {
                     res.status(201).send(id)
                 } else {
@@ -40,9 +68,7 @@ export class UserController extends CrudController {
                 res.sendStatus(500)
                 printToConsole(`Something went wrong adding an User in crud-action create.\nERROR: ${err}`)
             })
-        } else {
-            res.sendStatus(400);
-        }
+        })
     }
 
     /** ALL
@@ -90,7 +116,12 @@ export class UserController extends CrudController {
      * HTTP-Response containing a status code and if successful, the User in its body
      */
     public getByName(req: Request, res: Response): void {
-        this.userModule.getUserByName(req.params.name).then((user: User | null) => {
+        const userName = req.params.name
+        if (!userName || userName == ""){
+            res.status(400).send("Username missing")
+            return
+        }
+        this.userModule.getUserByName(userName).then((user: User | null) => {
             if (user) {
                 res.status(200).send(user)
             } else {
@@ -111,19 +142,66 @@ export class UserController extends CrudController {
      * HTTP-Response containing a status code and, if successful, the updated User document in its body
      */
     public update(req: Request, res: Response): void {
-        if (req.body.name.trim() !== undefined && req.body.name.trim() !== "" && req.body.password.trim() !== undefined && req.body.password.trim() !== "" && req.body.role.trim() !== undefined && req.body.role.trim() !== "" &&
-            ((req.body.role.trim() === "Admin") || (req.body.role.trim() === "Editor") || (req.body.role.trim() === "User"))) {
-            this.userModule.updateUser(new mongoose.Types.ObjectId(req.params.id), req.body).then((user: User | null) => {
-                if (user) {
-                    res.status(200).send(user)
-                }
-            }).catch((err) => {
-                res.sendStatus(500)
-                printToConsole("Something went wrong in updating an user.\n ERROR " + err)
-            })
-        } else {
-            res.sendStatus(400);
+        if (req.body.role && !["user","editor","admin"].includes(req.body.role.trim())){
+            res.status(400).send("Incorrect role")
+            return
         }
+        this.userModule.getUserById(req.params.id)
+            .then((user: User | null) => {
+                if (user === null){
+                    res.status(404).send("User not found")
+                    return
+                }
+                const name = req.body.name? req.body.name: user.name
+                const role = req.body.role? req.body.role: user.role
+
+                if (req.body.password){
+                    const salt = hashString.getSalt()
+                    hashString.encode(req.body.password.trim(), salt).then((passwordHash) => {
+                        this.updateUser(req, res,
+                            new UserClass(
+                                name,
+                                passwordHash,
+                                role,
+                                salt,
+                                req.body.firstname,
+                                req.body.lastname,
+                                req.body.email,
+                                req.body.searchColor,
+                                req.body.language
+                            ))
+                        return
+                    })
+                } else {
+                    this.updateUser(req, res,
+                            new UserClass(
+                                name,
+                                user.password,
+                                role,
+                                user.salt,
+                                req.body.firstname,
+                                req.body.lastname,
+                                req.body.email,
+                                req.body.searchColor,
+                                req.body.language
+                            ))
+                }
+
+            })
+    }
+
+    private updateUser(req: Request, res: Response, user: User){
+        this.userModule.updateUser(
+            new mongoose.Types.ObjectId(req.params.id), user
+        ).then((user: User | null) => {
+            if (user) {
+                res.status(200).send(user)
+            }
+        }).catch((err) => {
+            res.sendStatus(500)
+            printToConsole("Something went wrong in updating an user.\n ERROR " + err)
+        })
+
     }
 
     /**
@@ -161,4 +239,5 @@ export class UserController extends CrudController {
             }
         })
     }
+
 }

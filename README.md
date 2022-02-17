@@ -1,114 +1,84 @@
-# Pbl Backend
 
+# Pbl Backend
 Backend of the Pick-by-Light-System
 
-## Table of contents
-  * [Build instructions](#build-instructions)
-  * [Mongo Database](#mongo-database)
-  * [Run tests](#run-tests)
+## Introduction
+### Pick By Light – What’s that?
 
-## Build instructions
-Clone git repository
-```
-git clone git@git.thm.de:softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend.git
-```
-### Option 1: Local build (+Mongo Database in Docker Container)
-**Step 1:**
-Install all required node dependencies listed in [package.json](./package.json) to local system and run server locally.
+Ever searched for items in a shelf? Tools or parts in a workshop organizer?
+
+Pick By Light is a concept for helping people find things. The position of the currently desired object will be shown through visual signals.
+This concept is used by logistic centers like storage buildings, but can also be used on a smaller scale.
+
+This pick-by-light-project (alias pbl-project) is intended to enable people to build their own pick-by-light system – big or small and easily adaptable.
+
+It was developed as a students project in the course “SWT-Projekt” at [Technische Hochschule Mittelhessen (THM)](https://www.thm.de/site/en/).
+
+**Documentation** can be found in [Project Wiki](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/wikis/home)
+
+## Technologies
+
++ **NodeJS** → The backend server is a NodeJS server.
++ **MongoDB** → The database in which the application's data is organized is a MongoDB database.
++ **Mongoose** → The schema-based technology Mongoose is used in order to provide an easy way to handle data within the database.
++ **Chai** → Automatic testing is realized through the testing framework Chai.
++ **LDAP** → Supports authorization via LDAP-Server (but authorization via backend without LDAP is also possible).
+
+## Project setup
 
 ```
 cd pbl-backend
 npm install
 ```
 
-Create and run Mongo database in docker
-See [description](#mongo-database)
-
-
-**Step 3:**
-Start project described in 1a-c
-#### 1a. Run project in development mode:
-Server restarts automatically when file changes are observed
+### Compiles and reloads automatically when files change
 ```
 npm run dev
 ```
 
-#### 1b. Run project in production mode:
-Run Server without automatic restarting
+### Runs project in production mode
 ```
 npm run start
 ```
 
-#### 1c. Only build project:
-Compile typescript source into javscript
+### Compiles only
 ```
 npm run build
 ```
 
-### Option 2: Full docker
-Note: Make sure you have root rights when working with docker on Ubuntu. (sudo)
-
-#### Start mongo and node server
-Setting NODE_ENV to 'docker_dev' to run docker in development mode
-in develompent mode disableAuth is set to 'true'
+### Start mongo and node server
 ```
 NODE_ENV=docker_dev docker-compose up --build --detach
 ```
 
-Setting NODE_ENV to 'docker_prod' to run docker in production mode
-```
-NODE_ENV=docker_prod docker-compose up --build --detach
-```
-
-
-#### Stop mongo and node server 
+### Stop mongo and node server
 ```
 docker-compose down
 ```
 
-## Mongo Database
+## Configuration
 
-#### Start Mongo Docker Container
-If mongodb container exists and isn`t started yet
-```
-sudo docker start mongodb
-```
+### Config variables
 
-If mongodb container does not exist
-```
-sudo docker run -dit --name mongodb -p 27017:27017 mongo
-```
+Defined in [config](src/config/config.json)
 
-#### Stop Mongo Docker Container
++ debug → if set true debugging logs will be printed
 
-```
-sudo docker stop mongodb
-```
-#### Connect to Mongo Shell
+Defined in [default](config/default.json), [docker_dev](config/docker_dev.json), [docker_prod](config/docker_prod.json) and [test](config/test.json)
 
-Command `mongosh` is executed in container
-```
-sudo docker exec -it mongodb mongosh
-```
-After connecting to container, move into Database (Database name defined in [config.json](./src/config/config.json)):
-```
-use pblBackendDb
-```
-Example query: Show all items
-```
-db.items.find()
-```
++ disableAuth → if set true any authorization functionality will be turned off - used for testing and development only!
 
-#### Add test data to Mongo Database
-Add test data from json-Files [tests](src/tests/testdata) into mongo database
-```
-npm run addData
-```
+### Config constants
 
-#### Remove all data from Mongo Database
-```
-npm run removeData
-```
+Defined in [constants](src/config/constants.ts)
+
++ jwtkey
+    → JWT stands for **json web token** and is a standardized acces token, which secures data between two parties.
+    → An implementation of JWT can be found at [https://jwt.io/](https://jwt.io/).
+    → The jwt key defined in config constants is used to sign and verify the payload in the files (see [auth.controller.ts](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/blob/development/src/controllers/auth.controller.ts) and [auth.module.ts](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/blob/development/src/modules/auth/auth.module.ts))
+
++ expirationTime → time until jwtkey expires
++ requiredLangs → languages that are required ("en" as English, "de" as German)
 
 ## Tests
 Make sure your testing database is empty.
@@ -117,6 +87,26 @@ Execute tests defined in [tests](src/tests/testdata)
 NODE_ENV=test npm run test
 ``` 
 
-## License
+### Add test data to Mongo Database
+In case you might want to use test data add test data from json-Files [tests](src/tests/testdata) into mongo database
+```
+npm run addData
+```
 
-[Apache License 2.0](https://www.tldrlegal.com/l/apache2)
+### Remove all data from Mongo Database
+```
+npm run removeData
+```
+
+
+## Problems
+
+For some pcs the docker startup needs some extra commands.
+Try
+```
+systemctl start docker
+```
+before doing anything else and add sudo when starting the mongo server
+```
+sudo NODE_ENV=docker_dev docker-compose up --build --detach
+```

@@ -4,14 +4,14 @@ import {RoomModule} from "../modules/entities/room.module";
 import {MongoModule} from "../modules/mongo/mongo.module";
 import {PositionModule} from "../modules/entities/position.module";
 import express from "express";
-import {lightController, positionController} from "./index";
 import {Position} from "../models/position.model";
 import {Shelf} from "../models/shelf.model";
 import {Room} from "../models/room.model";
-import {shiningId, timer} from "./timer";
-
-const mungo = require("mongoose");
-const axios = require('axios');
+import {embeddedPORT} from "../config/config.json";
+import {shiningId, timer} from "../modules/util/timer";
+import { printToConsole } from "../modules/util/util.module";
+import mongoose from "mongoose";
+import axios from "axios";
 
 /**
  * This Controller controls the light routes.
@@ -49,31 +49,31 @@ export class LightController {
     public async turnOn(req: express.Request, res: express.Response) {
         // FE gives ItemId, Color, Duration
         // ES needs PositionNumber, ShelfNumber, Color
-        if ((!req.body.itemId) || (!mungo.Types.ObjectId(req.body.itemId))) {
+        if ((!req.body.itemId) || (!new mongoose.Types.ObjectId(req.body.itemId))) {
             return res.status(400).send("Id missing or in wrong format")
         }
         //////
-        console.log("id:" + req.body.itemId)
+        printToConsole("id:" + req.body.itemId)
         if (!req.body.color) {
             return res.status(400).send("Color missing")
         }
         //////
-        console.log("color:" + req.body.color)
-        const positions: Position[] = await positionController.positionModule.getPositionByItemId(mungo.Types.ObjectId(req.body.itemId))
+        printToConsole("color:" + req.body.color)
+        const positions: Position[] = await this.positionModule.getPositionByItemId(new mongoose.Types.ObjectId(req.body.itemId))
         if ((!positions) || positions.length < 1) {
             return res.status(404).send("Found no Position holding this Item")
         }
         //////
-        console.log("pos:" + positions)
+        printToConsole("pos:" + positions)
         let atLeastOneSuccess: boolean = false
 
         let errorResponse: any;
         for (const position of positions) {
-            const shelf: null | Shelf = await this.shelfModule.getShelfById(mungo.Types.ObjectId(position.shelfId))
+            const shelf: null | Shelf = await this.shelfModule.getShelfById(new mongoose.Types.ObjectId(position.shelfId))
             if (!shelf?.roomId) {
                 return res.status(400).send("No valid roomId in shelf")
             }
-            const room: null | Room = await this.roomModule.getRoomById(mungo.Types.ObjectId(shelf?.roomId))
+            const room: null | Room = await this.roomModule.getRoomById(new mongoose.Types.ObjectId(shelf?.roomId))
             if (!room) {
                 return res.status(400).send("Room was not found in DB")
             }
@@ -81,20 +81,20 @@ export class LightController {
             let roomIp: undefined | string = room?.ipAddress
             if (shelf && shelf.number && position.number && roomIp) {
                 ////
-                console.log("shelf:" + shelf.number)
+                printToConsole("shelf:" + shelf.number)
                 // send to ES
-                let response = await axios.post('http://' + roomIp + ':8000/light/turnOn', {
+                let response = await axios.post(`http://${roomIp}:${embeddedPORT}/light/turnOn`, {
                     ShelfNumber: shelf.number,
                     PositionId: position.number,
                     Color: req.body.color
                 }).catch((err: any)=>{
-                    console.log("Error:"+ err)
+                    printToConsole("Error:"+ err)
                     errorResponse = err.response;
 
                 })
                 if (response && response.status && response.status == 200) {
-                        atLeastOneSuccess = true;
-                        console.log("Status:" + response.status);
+                    atLeastOneSuccess = true;
+                    printToConsole("Status:" + response.status);
                 }
             } else {
                 return res.status(404).send("Missing room.ipAddress or shelf/shelf.number")
@@ -104,7 +104,7 @@ export class LightController {
             shiningId.push(req.body.itemId)
             res.status(200).send("There shall be light")
             if (req.body.duration) {
-                timer(() => lightController.sendTurnOffToES(req.body.itemId), req.body.itemId, req.body.duration)
+                timer(() => this.sendTurnOffToES(req.body.itemId), req.body.itemId, req.body.duration)
             }
         } else {
             if(errorResponse.status){
@@ -126,7 +126,7 @@ export class LightController {
      * @param {express.Response} res Response to FE, status ok or error code
      */
     public async turnOff(req: express.Request, res: express.Response) {
-        if ((!req.body.itemId) || (!mungo.Types.ObjectId(req.body.itemId))) {
+        if (!((req.body.itemId) || (new mongoose.Types.ObjectId(req.body.itemId)))) {
             return res.status(400).send("id missing or wrong format")
         }
         await this.sendTurnOffToES(req.body.itemId, res)
@@ -144,11 +144,10 @@ export class LightController {
      * @param {express.Response} res? Response to FE, status ok or error code
      */
     public async sendTurnOffToES(itemId: string, res?: express.Response) {
-
 // Necessary for message to ES: shelfNumber and PositionId (they meant PositionNumber. They got confused. It IS the position.number.)
 
 // Get Positions by ItemId (from req.param.id)
-        const positions: Position[] = await positionController.positionModule.getPositionByItemId(mungo.Types.ObjectId(itemId))
+        const positions: Position[] = await this.positionModule.getPositionByItemId(new mongoose.Types.ObjectId(itemId))
 // Check for success (at least one Position returned)
         if (res) {
             if ((!positions) || positions === [] || positions.length < 1) {
@@ -158,13 +157,13 @@ export class LightController {
         let atLeastOneSuccess: boolean = false;
         let errorResponse: any;
         for (const position of positions) {
-            const shelf: null | Shelf = await this.shelfModule.getShelfById(mungo.Types.ObjectId(position.shelfId))
+            const shelf: null | Shelf = await this.shelfModule.getShelfById(new mongoose.Types.ObjectId(position.shelfId))
             if (res) {
                 if (!shelf?.roomId) {
                     return res.status(400).send("No valid roomId in shelf")
                 }
             }
-            const room: null | Room = await this.roomModule.getRoomById(mungo.Types.ObjectId(shelf?.roomId))
+            const room: null | Room = await this.roomModule.getRoomById(new mongoose.Types.ObjectId(shelf?.roomId))
             if (res) {
                 if (!room) {
                     return res.status(400).send("Room was not found in DB")
@@ -174,37 +173,37 @@ export class LightController {
             if (shelf && shelf.number && position.number && roomIp) {
                 // send to ES
                 // light/turnOff
-                let response = await axios.post('http://' + roomIp + ':8000/light/turnOff', {
+                let response = await axios.post(`http://${roomIp}:${embeddedPORT}/light/turnOff`, {
                     ShelfNumber: shelf.number,
                     PositionId: position.number
-                }).catch((err: any)=>{
-                console.log("Error:"+ err)
-                errorResponse = err.response;
+                }).catch((err: any) => {
+                    printToConsole("Error:" + err)
+                    errorResponse = err.response;
 
-            })
-            if (response && response.status && response.status == 200) {
-                atLeastOneSuccess = true;
-                console.log("Status:" + response.status);
-            }
+                })
+                if (response && response.status && response.status == 200) {
+                    atLeastOneSuccess = true;
+                    printToConsole("Status:" + response.status);
+                }
             } else {
                 if (res) {
                     return res.status(404).send("Missing room.ipAddress or shelf/shelf.number")
                 }
             }
+        }
             if (atLeastOneSuccess) {
                 shiningId.splice(shiningId.indexOf(itemId), 1)
                 if (res) {
-                    res.status(200).send("Darkness shall rule!")
+                    return res.status(200).send("Darkness shall rule!")
                 }
             } else {
                 if(res) {
                     if(errorResponse) {
                         return res.status(errorResponse.status).send(errorResponse.data)
                     }else{
-                        return res.status(500).send("Something went wrong")
+                        return res.status(500).send()
                     }
                 }
             }
-        }
     }
 }

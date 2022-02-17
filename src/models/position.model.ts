@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
-import {Item} from "./item.model";
-import {Shelf} from "./shelf.model";
 
 /** POSITION
  * Position interface, representing the Position document in MongoDB
  */
 export interface Position {
-    itemId?: mongoose.Types.ObjectId,
+    "itemId"?: mongoose.Types.ObjectId,
     "_id"?: mongoose.Types.ObjectId,
     "number": number,
     "quantity": number,
@@ -24,11 +22,11 @@ export class PositionClass implements Position{
     quantity: number;
     shelfId: mongoose.Types.ObjectId;
 
-    constructor( number: number, quantity: number, shelf: mongoose.Types.ObjectId , item?: mongoose.Types.ObjectId, _id?: mongoose.Types.ObjectId) {
-        this.itemId = item;
-        this._id = _id;
+    constructor( number: number, quantity: number, shelfId: mongoose.Types.ObjectId , itemId?: mongoose.Types.ObjectId, _id?: mongoose.Types.ObjectId) {
         this.number = number;
         this.quantity = quantity;
-        this.shelfId = shelf;
+        this.shelfId = shelfId;
+        this.itemId = itemId;
+        this._id = _id;
     }
 }

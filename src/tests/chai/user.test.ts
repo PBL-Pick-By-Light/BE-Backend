@@ -3,6 +3,7 @@ import chai from 'chai'
 import chaiHttp from 'chai-http'
 import {printToConsole} from "../../modules/util/util.module";
 import users from "../testdata/users.json"
+import crypto from "crypto";
 
 chai.use(chaiHttp)
 
@@ -18,10 +19,7 @@ export async function userTest() {
         it(`user:getAll: should return 200`, async () => {
             return await chai.request(app).get('/users/getAll')
                 .then(res => {
-                    let userArr = res.body
-                    let userJsonArrLen = users.userSketches.length
                     chai.expect(res.status).to.equal(200)
-                    chai.expect(userArr.length).to.equal(userJsonArrLen)
                 })
         })
 
@@ -33,12 +31,26 @@ export async function userTest() {
             return await chai.request(app).post('/auth/register').send({
                     name:	"Elsa",
                     password:	"12345",
-                    role:	"Admin"
+                    role:	"admin"
                 }).then(res => {
                     printToConsole(res.body);
                     chai.expect(res.status).to.equal(201)
                     userId = res.body;
                     printToConsole(userId);
+                })
+        })
+
+        /** Create new User
+         * Test /users/create
+         */
+        it(`user:create: incorrect role should return 400 error message`, async () => {
+            return await chai.request(app).post('/users/create').send({
+                    name:	"Elsa",
+                    password:	"12345",
+                    role:	"Admin"
+                }).then(res => {
+                    printToConsole(res.body);
+                    chai.expect(res.status).to.equal(400)
                 })
         })
 
@@ -49,7 +61,7 @@ export async function userTest() {
             return await chai.request(app).post('/users/create').send({
                     name:	"",
                     password:	"12345",
-                    role:	"Admin"
+                    role:	"admin"
                 }).then(res => {
                     printToConsole(res.body);
                     chai.expect(res.status).to.equal(400)
@@ -108,49 +120,38 @@ export async function userTest() {
             return await chai.request(app).post("/users/update/" + userId).send({
                 name:	"Anna",
                 password:	"54321",
-                role:	"Editor"
+                role:	"editor"
                 }).then(res => {
                     chai.expect(res.status).to.equal(200)
                     chai.expect(res.body._id).to.equal(`${userId}`)
                 })
         })
 
-        /** Update User - Bad Request due to missing role
+        /** Update User - Add firstname and lastname
          * Test /users/update
          */
-        it(`user:update: should return 400`, async () => {
+        it(`user:update: should return 200`, async () => {
             return await chai.request(app).post("/users/update/" + userId).send({
                 name:	"Hans",
                 password:	"Princ3",
-                role:	""
+                firstname: "Hans",
+                lastname: "Turing"
             }).then(res => {
-                    chai.expect(res.status).to.equal(400)
+                    chai.expect(res.status).to.equal(200)
                 })
         })
 
-        /** Update User - Bad Request due to missing name
+        /** Update User - Bad Request due wrong User Id
          * Test /users/update
          */
-        it(`user:update: should return 400`, async () => {
-            return await chai.request(app).post("/users/update/" + userId).send({
-                name:	"",
-                password:	"50114",
-                role:	"Admin"
-            }).then(res => {
-                chai.expect(res.status).to.equal(400)
-            })
-        })
-
-        /** Update User - Bad Request due to missing password
-         * Test /users/update
-         */
-        it(`user:update: should return 400`, async () => {
-            return await chai.request(app).post("/users/update/" + userId).send({
+        it(`user:update: should return 400 due to wrong User Id`, async () => {
+            const fakeId = crypto.randomBytes(32).toString("hex")
+            return await chai.request(app).post("/users/update/" + fakeId).send({
                 name:	"Elsa",
-                password:	"",
-                role:	"Admin"
+                password:	"lykjf0394",
+                role:	"admin"
             }).then(res => {
-                chai.expect(res.status).to.equal(400)
+                chai.expect(res.status).to.equal(404)
             })
         })
 

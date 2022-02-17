@@ -2,7 +2,7 @@ import {EntityModule} from "./entity.module";
 import {MongoModule} from "../mongo/mongo.module";
 import {Room} from "../../models/room.model";
 import {Schema} from "mongoose";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import {printToConsole} from "../../modules/util/util.module";
 
 /**
@@ -25,7 +25,6 @@ export class RoomModule extends EntityModule {
         })
         if (id) {
             printToConsole(`[+] New room with id: ${id} saved.`);
-            this.IDsArray.push(id);
             return id
         }
         return null

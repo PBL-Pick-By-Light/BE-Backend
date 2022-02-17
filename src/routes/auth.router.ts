@@ -7,7 +7,7 @@ export const router = express.Router({
 })
 
 /**
- * Authentification Routes
+ * Authentication Routes
  *  notice that the login request doesn't need to be authenticated
  *  this is to avoid login being impossible - you can't authenticate yourself before being logged in
  */

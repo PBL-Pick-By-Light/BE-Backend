@@ -1,6 +1,6 @@
 import express from 'express'
 import { Request, Response} from 'express'
-import {positionController} from '../controllers/index';
+import {positionController} from '../controllers';
 import JWT from "../modules/auth/auth.module";
 
 export const router = express.Router({
@@ -17,6 +17,10 @@ router.post('/create', (req: Request, res: Response)=>{
 
 router.post('/update/:id', (req: Request, res: Response)=>{
     JWT.authenticate(req, res, () => positionController.update(req, res))
+})
+
+router.post('/updateQuantity/:id', (req: Request, res: Response)=>{
+    JWT.authenticate(req, res, () => positionController.updateQuantity(req, res))
 })
 
 // GET
