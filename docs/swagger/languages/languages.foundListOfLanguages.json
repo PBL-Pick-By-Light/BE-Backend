@@ -1,0 +1,20 @@
+{
+    "type": "array",
+    "description": "List of found languages.",
+    "items": {
+        "$ref": "./languages.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id": "LanguageID",
+            "lang": "EN",
+            "required": false
+        },
+        {
+            "_id": "LanguageID",
+            "lang": "RU",
+            "required": false
+        }
+    ]
+}

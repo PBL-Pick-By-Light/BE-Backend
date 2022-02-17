@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "description": "Update existing item.",
+    "properties": {
+        "labelIds": {
+            "type": "array",
+            "items": {
+            "type": "string"
+        }
+      }
+    },
+    "example": {
+      "labelIds": ["LabelID", "LabelID"]
+    }
+}

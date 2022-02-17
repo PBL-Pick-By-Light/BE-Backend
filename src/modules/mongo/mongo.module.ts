@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import {connect} from 'mongoose';
 import {dbName} from "../../config/config.json";
 import * as schemes from "../../models/index"
@@ -11,7 +11,7 @@ import {Shelf} from "../../models/shelf.model";
 import {Room} from "../../models/room.model";
 import {Language} from "../../models/language.model";
 import {printToConsole} from "../util/util.module";
-import { Settings } from '../../models/settings.model';
+import {Settings} from '../../models/settings.model';
 import config from 'config'
 
 /**
@@ -127,8 +127,6 @@ export class MongoModule {
 
     // Labels
 
-
-
     /**
      * Add a label into the database. Used for creating new labelIds.
      * @param {Label} labelData
@@ -160,7 +158,6 @@ export class MongoModule {
         return null;
     }
 
-
     /**
      * Find a label by a specific filter. Used for finding a single label.
      * @param filter
@@ -176,7 +173,6 @@ export class MongoModule {
     //     return schemes.labelModel.find(filter);
     // }
 
-
     /**
      * Find all labels that are stored in the database.
      * @return {Label[]} labelIds
@@ -184,7 +180,6 @@ export class MongoModule {
     async getAllLabels(): Promise<Label[]> {
         return schemes.labelModel.find({});
     }
-
 
     /**
      * change properties of a label in the database
@@ -201,7 +196,6 @@ export class MongoModule {
             }
         }, {new: true})
     }
-
 
     /**
      * delete a label from database
@@ -286,6 +280,17 @@ export class MongoModule {
         )
     }
 
+    async updatePositionQuantityById(id: mongoose.Types.ObjectId, newQuantity: number): Promise<Position|null>{
+    return schemes.positionModel.findOne(
+        {_id:id},
+        {
+                $set: {
+                quantity: newQuantity
+            }
+        }, {new: true}
+    )
+    }
+
     //Users
 
     /**
@@ -338,6 +343,12 @@ export class MongoModule {
                 name:	    newData.name,
                 password:	newData.password,
                 role:	    newData.role,
+                salt:	    newData.salt,
+                firstname:	    newData.firstname,
+                lastname:	    newData.lastname,
+                email:	    newData.email,
+                searchColor:	    newData.searchColor,
+                language:	    newData.language,
                 jwt:        newData.jwt
             }
         }, {new: true})
@@ -463,13 +474,17 @@ export class MongoModule {
      * @return {Shelf | null} updated Shelf
      */
     async updateShelfById(id: mongoose.Types.ObjectId, newData: Shelf): Promise<Shelf | null> {
+
+        const existingShelf = await schemes.shelfModel.findOne({_id: id});
+        if (existingShelf === null) return null;
         return schemes.shelfModel.findOneAndUpdate({_id: id}, {
             $set: {
                 number: newData.number,
                 roomId: newData.roomId
             }
-        }, {new: true})
+        }, {new: true});
     }
+
 
     /**
      * delete a shelf from database
@@ -566,9 +581,9 @@ export class MongoModule {
 
     /**
      * Changes properties of settings in the database
-     * @param {mongoose.Types.ObjectId} id
-     * @param {[String]} colors List of ui colors 
-     * @param {mongoose.Types.ObjectId} language selected language
+     * @param {Settings} settings
+     * {[String]} colors List of ui colors
+     * {mongoose.Types.ObjectId} language selected language
      */
 
     async updateSettings(settings: Settings): Promise<Settings | null> {
@@ -582,7 +597,7 @@ export class MongoModule {
 
     /**
      * Add settings into the database
-     * @param {Shelf} shelfData
+     * @param {Settings} settings
      * @return {mongoose.Types.ObjectId | null} shelfId
      */
 

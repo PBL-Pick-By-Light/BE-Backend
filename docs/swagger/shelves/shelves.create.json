@@ -1,0 +1,16 @@
+{
+    "type": "object",
+      "description": "Create new Shelf",
+      "properties": {
+        "number": {
+          "type":"number"
+        },
+         "roomId": {
+          "type": "string"
+        }
+    },
+      "example": {
+        "number": 8,
+        "roomId": "RoomID"  
+      }
+}

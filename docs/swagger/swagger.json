@@ -1,0 +1,1982 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PBL-Backend.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "host": "http://localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Manage authentication attempts."
+    },
+    {
+      "name": "Items",
+      "description": "Manage Items."
+    },
+    {
+      "name": "Shelves",
+      "description": "Manage shelves."
+    },
+    {
+      "name": "Labels",
+      "description": "Manage labels."
+    },
+    {
+      "name": "Rooms",
+      "description": "Manage rooms"
+    },
+    {
+      "name": "Positions",
+      "description": "Manage positions"
+    },
+    {
+      "name": "Languages",
+      "description": "Manage languages"
+    },
+    {
+      "name": "Light",
+      "description": "Manage lights"
+    },
+    {
+      "name": "Settings",
+      "description": "Manage settings"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post":{
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { 
+                "$ref": "./auth/auth.register.json"
+            }
+          }
+        }
+        },   
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The new user ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Registration failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./commons/common.badrequest.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post":{
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content":{
+            "application/json": {
+              "schema": {
+                "$ref": "./auth/auth.login.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { 
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "token": {"type": "string"}
+                  },
+                  "example": {
+                    "message": "Successfully logged in as Vincent van Gogh via LDAP",
+                    "token": "Example JWT token."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./auth/auth.loginfailure.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post":{
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "responses": {
+          "200": { 
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  },
+                  "example": {
+                    "message": "logged out successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Authentication failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  },
+                  "example": {
+                    "message": "error in logging out"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/delete/{id}": {
+      "delete": {
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {"in": "path",
+           "name": "id",
+           "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./auth/auth.user.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  },
+                  "example": {
+                    "message": "no id given"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/create": {
+      "post": {
+        "tags": ["Items"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./items/items.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The new user ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/items/delete/{id}": {
+      "delete": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {"in": "path",
+           "name": "id",
+           "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/update/{id}": {
+      "post": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./items/items.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated item information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/findByLabel": {
+      "post": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./items/items.findByLabel.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of found items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.foundListOfItems.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/getAll": {
+      "get": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.foundListOfItems.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/findById/{id}": {
+      "get": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found item.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/items/findByName/{name}": {
+      "get": {
+        "tags": ["Items"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found item.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./items/items.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/shelves/create": {
+      "post": {
+        "tags": ["Shelves"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./shelves/shelves.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The shelf ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/shelves/update/{id}": {
+      "post": {
+        "tags": ["Shelves"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./shelves/shelves.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated shelf information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./shelves/shelves.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/shelves/getAll": {
+      "get": {
+        "tags": ["Shelves"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found shelves.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./shelves/shelves.foundListOfShelves.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/shelves/findById/{id}": {
+      "get": {
+        "tags": ["Shelves"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found shelf.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./shelves/shelves.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/shelves/delete/{id}": {
+      "delete": {
+        "tags": ["Shelves"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {"in": "path",
+           "name": "id",
+           "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./shelves/shelves.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/positions/create": {
+      "post": {
+        "tags": ["Positions"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./positions/positions.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The position ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/positions/update/{id}": {
+      "post": {
+        "tags": ["Positions"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./positions/positions.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated position information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./positions/positions.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/positions/getAll": {
+      "get": {
+        "tags": ["Positions"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found positions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./positions/positions.foundListOfPositions.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/positions/findById/{id}": {
+      "get": {
+        "tags": ["Positions"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Position.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./positions/positions.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/positions/findByItemId/{id}": {
+      "get": {
+        "tags": ["Positions"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Position.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./positions/positions.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/positions/delete/{id}": {
+      "delete": {
+        "tags": ["Positions"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./positions/positions.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/create": {
+      "post": {
+        "tags": ["Labels"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./labels/labels.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The label ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/labels/update/{id}": {
+      "post": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./labels/labels.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated label information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/getAll": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found labels.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.foundListOfLabels.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/findById/{id}": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Label.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/findByName/{name}": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found label.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/getLabelIdsByItemId/{id}": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Label IDs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.foundListOfLabelIDs.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/getLabelsByItemId/{id}": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Labels.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.foundListOfLabels.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/findByItemId/{id}": {
+      "get": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Label.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/labels/delete/{id}": {
+      "delete": {
+        "tags": ["Labels"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./labels/labels.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rooms/create": {
+      "post": {
+        "tags": ["Rooms"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./rooms/rooms.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The room ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/rooms/update/{id}": {
+      "post": {
+        "tags": ["Rooms"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./rooms/rooms.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated label information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./rooms/rooms.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rooms/getAll": {
+      "get": {
+        "tags": ["Rooms"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found rooms.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./rooms/rooms.foundListOfRooms.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rooms/findById/{id}": {
+      "get": {
+        "tags": ["Rooms"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found Room.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./rooms/rooms.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/rooms/delete/{id}": {
+      "delete": {
+        "tags": ["Rooms"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./rooms/rooms.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/light/turnOn": {
+      "post": {
+        "tags": ["Light"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": false
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./light/light.turnOn.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "There shall be the light."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Id missing or in wrong format"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Found no Position holding this Item"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+              "example": "Something went wrong: Status 500 Data: SomeEmbeddedSystemsSideError"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/light/turnOff": {
+      "post": {
+        "tags": ["Light"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": false
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./light/light.turnOff.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Darkness shall rule!"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Missing room.ipAddress or shelf/shelf.number"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "No valid roomId in shelf"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+              "example": "Something went wrong: Status 500 Data: SomeEmbeddedSystemsSideError"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages/create": {
+      "post": {
+        "tags": ["Languages"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": false
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./languages/languages.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The language ID."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/languages/update/{id}": {
+      "post": {
+        "tags": ["Languages"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./languages/languages.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated language information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./languages/languages.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/languages/getAll": {
+      "get": {
+        "tags": ["Languages"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found languages.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./languages/languages.foundListOfLanguages.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/languages/findByName/{lang}": {
+      "get": {
+        "tags": ["Languages"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "lang",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found language.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./languages/languages.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/languages/findById/{id}": {
+      "get": {
+        "tags": ["Languages"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found language.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./languages/languages.withID.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {}
+            }
+          }, 
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/languages/delete/{id}": {
+      "delete": {
+        "tags": ["Languages"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./languages/languages.withID.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/settings/update": {
+      "post": {
+        "tags": ["Settings"],
+        "parameters": [
+         {
+          "in": "header",
+          "name": "authorization",
+          "required": true
+         } 
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./settings/settings.create.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                  },
+                  "example": true
+                }
+              }
+            },
+          "500": {
+
+          }
+        }
+      }
+    },
+    "/settings/": {
+      "get": {
+        "tags": ["Settings"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All found settings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./settings/settings.foundListOfSettings.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

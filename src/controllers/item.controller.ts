@@ -1,7 +1,5 @@
 import {Request, Response} from "express";
 import {CrudController} from './crud.controller';
-import {embeddedServer} from '../config/config.json'
-import {AxiosModule} from "../modules/axios/axios.module";
 import {ItemModule} from "../modules/entities/item.module";
 import {PositionModule} from "../modules/entities/position.module";
 import {ShelfModule} from "../modules/entities/shelf.module";
@@ -27,11 +25,6 @@ export class ItemController extends CrudController {
         this.positionModule = new PositionModule(mongo);
         this.shelfModule = new ShelfModule(mongo);
     }
-
-    axiosWrapper = new AxiosModule({
-        baseURL: `${embeddedServer.URL}:${embeddedServer.PORT}`,
-        headers: {'content-type': 'application/json'}
-    })
 
     /**
      * Sends all items.
@@ -63,11 +56,10 @@ export class ItemController extends CrudController {
 
     public async read(req: Request, res: Response) {
         const itemID: string = req.params.id;
-        let mongoose = require('mongoose');
 
         let mongooseItemId: any;
         try {
-            mongooseItemId = mongoose.Types.ObjectId(itemID);
+            mongooseItemId = new mongoose.Types.ObjectId(itemID);
         } catch (error) {
             printToConsole("Invalid item ID! Could not convert to mongoose.Types.ObjectId.");
             res.status(400).contentType("application/json").send({status: "Bad request"});
@@ -87,31 +79,12 @@ export class ItemController extends CrudController {
         }).catch(() => res.status(500).contentType("application/json").send({status: "Internal Server=Error"}));
     }
 
-    /**
-     * Sends a specific item. Uses the item's name to filter.
-     * @param req
-     * @param res
-     */
-
-    public findByName(req: Request, res: Response): void {
-        const name: string = req.body.name;
-        const lang: string = req.body.language;
-        printToConsole(lang)
-        this.itemModule.getItemByName(name, lang).then((result: any) => {
-            if (result != null) {
-                res.status(200).contentType('json').send(result);
-            } else {
-                res.sendStatus(400);
-            }
-        }).catch(() => res.sendStatus(500));
-    }
 
     /**
      * Sends specific items. Uses the items' labels to filter.
      * @param req
      * @param res
      */
-
 
     public findByLabel(req: Request, res: Response): void {
         const tagList: mongoose.Types.ObjectId[] = req.body.labelIds;

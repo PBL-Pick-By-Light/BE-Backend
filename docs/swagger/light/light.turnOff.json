@@ -1,0 +1,12 @@
+{
+    "type": "object",
+      "description": "The darkness will rise!",
+      "properties": {
+        "itemId": {
+          "type":"string"
+        }
+    },
+      "example": {
+        "itemID": "ItemID"
+      }
+}

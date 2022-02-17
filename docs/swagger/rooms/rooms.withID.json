@@ -1,0 +1,32 @@
+{
+    "type": "object",
+      "description": "Create new Room",
+      "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "name": {
+            "type":"object",
+            "description": "Name in two languages.",
+            "properties": {
+                "en": {
+                    "type": "string"
+                },
+                "de": {
+                    "type": "string"
+                }
+            }
+        },
+        "ipAddress": {
+            "type": "string"
+        }
+    },
+      "example": {
+        "_id": "RoomID",
+        "name": {
+            "en": "NameEN",
+            "de": "NameDE" 
+        },
+        "ipAddress": "RoomIPAddress."
+      }
+}

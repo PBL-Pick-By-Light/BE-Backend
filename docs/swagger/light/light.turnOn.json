@@ -1,0 +1,20 @@
+{
+    "type": "object",
+      "description": "Let`s start the party!",
+      "properties": {
+        "itemId": {
+          "type":"string"
+        },
+         "color": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "number"
+        }
+    },
+      "example": {
+        "itemID": "ItemID",
+        "color": "#DC2121",
+        "duration": 8 
+      }
+}

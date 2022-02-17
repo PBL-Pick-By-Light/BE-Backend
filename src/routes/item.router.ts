@@ -1,6 +1,6 @@
 import express from 'express'
 import {Request, Response} from 'express'
-import {itemController} from '../controllers/index';
+import {itemController} from '../controllers';
 import {printToConsole} from"../modules/util/util.module";
 import JWT from '../modules/auth/auth.module';
 
@@ -26,10 +26,6 @@ router.post('/update/:id', (req: Request, res: Response) => {
 
 router.post('/findByLabel', (req: Request, res: Response) => {
     JWT.authenticate(req, res, () => itemController.findByLabel(req, res))
-})
-
-router.post('/findByName', (req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => itemController.findByName(req, res))
 })
 
 // GET Routes

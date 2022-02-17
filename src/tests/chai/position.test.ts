@@ -1,9 +1,9 @@
 import {app} from '../../index'
 import chai from 'chai'
 import chaiHttp from 'chai-http'
-
-let mongo = require("mongoose");
+import mongoose from "mongoose";
 import {printToConsole} from "../../modules/util/util.module";
+
 
 chai.use(chaiHttp)
 
@@ -44,7 +44,7 @@ export async function positiontest() {
                     "name": {"en":"motion sensor", "de":"Bewegungssensor"},
                     "description": {"en":"width 2m", "de":"Breite 2m"},
                     "countable": true,
-                    "labelIds": [mongo.Types.ObjectId(labelId)]
+                    "labelIds": [labelId]
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(201)
@@ -75,7 +75,7 @@ export async function positiontest() {
             return await chai.request(app).post('/shelves/create')
                 .send({
                     "number": 3,
-                    "roomId": mongo.Types.ObjectId(roomId)
+                    "roomId": roomId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(201)
@@ -92,10 +92,10 @@ export async function positiontest() {
         it(`position:create: should return 201`, async () => {
             return await chai.request(app).post('/positions/create')
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 6,
                     "quantity": 20,
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(201)
@@ -109,7 +109,7 @@ export async function positiontest() {
         it(`position:create: should return 400 not all attributes are given"`, async () => {
             return await chai.request(app).post('/positions/create')
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 7,
                     "quantity": 20
                 })
@@ -124,10 +124,10 @@ export async function positiontest() {
         it(`position:create: should return 403 position already exists`, async () => {
             return await chai.request(app).post('/positions/create')
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 6,
                     "quantity": 20,
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(403)
@@ -139,7 +139,7 @@ export async function positiontest() {
         it(`position:create: should return 400 number or shelfId is not given`, async () => {
             return await chai.request(app).post('/positions/create')
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 7,
                     "quantity": 20,
                     "shelfId": null//shelf id not defined
@@ -154,10 +154,10 @@ export async function positiontest() {
         it(`position:create: should return 400 countable doesn't fit to quantity`, async () => {
             return await chai.request(app).post('/positions/create')
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 7,
                     "quantity": null,//quantity null
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(400)
@@ -195,10 +195,10 @@ export async function positiontest() {
         it(`position:update: should return 200`, async () => {
             return await chai.request(app).post("/positions/update/" + positionId)
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 6,
                     "quantity": 100,//new quantity
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(200)
@@ -211,7 +211,7 @@ export async function positiontest() {
         it(`position:update: should return 400 not all attributes are given`, async () => {
             return await chai.request(app).post("/positions/update/" + positionId)
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 6,
                     "quantity": 100
                 })
@@ -225,10 +225,10 @@ export async function positiontest() {
         it(`position:update: should return 400 shelf and number are not updatable`, async () => {
             return await chai.request(app).post("/positions/update/" + positionId)
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 3,
                     "quantity": 20,
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(400)
@@ -240,10 +240,10 @@ export async function positiontest() {
         it(`position:update: should return 400 countable doesn't fit to quantity`, async () => {
             return await chai.request(app).post("/positions/update/" + positionId)
                 .send({
-                    "itemId": mongo.Types.ObjectId(itemId),
+                    "itemId": itemId,
                     "number": 6,
                     "quantity": null,//qunatity null
-                    "shelfId": mongo.Types.ObjectId(shelfId)
+                    "shelfId": shelfId
                 })
                 .then(res => {
                     chai.expect(res.status).to.equal(400)

@@ -10,7 +10,6 @@ export class ShelfModule extends EntityModule {
         super(mongo);
     }
 
-
     /**
      * tells mongo.module to create a new Shelf doc in the DB using the given values
      * pushes new id to Entities IDsArray and logs action on console
@@ -18,9 +17,19 @@ export class ShelfModule extends EntityModule {
      * values for the new Shelf
      */
     async createShelf(shelfData: Shelf): Promise<mongoose.Types.ObjectId | null> {
-        const id = await this.mongo.addShelf(shelfData)
-        printToConsole(`[+] New shelf with id: ${id} saved.`);
-        return id;
+        const shelf = await this.mongo.findShelf({number: shelfData.number, roomId: shelfData.roomId})
+            .catch((err) => {
+                printToConsole(err)
+                return null
+            })
+        if (shelf) {
+            printToConsole("No shelf created")
+            return null
+        } else {
+            const id = await this.mongo.addShelf(shelfData)
+            printToConsole(`[+] New shelf with id: ${id} saved.`);
+            return id;
+        }
     }
 
     // Get functions
@@ -56,7 +65,7 @@ export class ShelfModule extends EntityModule {
      * @param updatedData : Shelf
      */
     async updateShelfById(id: mongoose.Types.ObjectId, updatedData: Shelf): Promise<Shelf | null> {
-        return this.mongo.updateShelfById(id, updatedData)
+        return this.mongo.updateShelfById(id, updatedData);
     }
 
     /**

@@ -25,7 +25,6 @@ export class ItemModule extends EntityModule {
         const itemId: mongoose.Types.ObjectId | null = await this.mongo.addItem(itemData)
         printToConsole('[+] New item with id ' + itemId + ' saved.');
         if (itemId) {
-            this.IDsArray.push(itemId);
             return itemId
         } else {
             return null
@@ -48,22 +47,6 @@ export class ItemModule extends EntityModule {
         });
     }
 
-    /**
-     * Gets an Item by its name
-     * @param {String} name name of the Item that is to be found
-     * @return {Promise<Item|null>} a Promise that will deliver either the Item or null, in case it couldn't be found in the database
-     * Function is currently not in use!
-     */
-
-    async getItemByName(name: string, language: string): Promise<Item | null> {
-        return this.mongo.findItem({[`name.${language}`] : name}).then(item => {
-            printToConsole(item);
-            return item;
-        }).catch((err: any) => {
-            console.error(err);
-            return null;
-        })
-    }
 
     /**
      // Gets an Item by its labels

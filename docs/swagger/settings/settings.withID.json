@@ -1,0 +1,21 @@
+{
+    "type": "object",
+      "description": "Full settings object structure.",
+      "properties": {
+        "_id": "string",
+        "colors": {
+          "type":"array",
+          "items": {
+              "type": "string"
+          }
+        },
+        "language": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "_id":"SettingsID",
+        "colors": ["#DC2121", "#810707"],
+        "language": "EN"
+      }
+}

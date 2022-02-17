@@ -1,0 +1,41 @@
+{
+    "type": "object",
+      "description": "Create new item.",
+      "properties": {
+        "name": {
+          "type":"object",
+            "properties": {
+              "de": "string",
+              "en": "string"
+            }
+        },
+        "description": {
+          "type": "object",
+            "properties": {
+              "de": "string",
+              "en": "string"
+            }
+          },
+        "countable": {
+          "type": "boolean"
+        },
+        "labelIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "example": {
+        "name": {
+          "en": "Golden Ring",
+          "de": "goldener Ring"
+        },
+        "description": {
+          "en": "One Ring to rule them all, one Ring to find them, one Ring to bring them all and in the darkness bind them...",
+          "de": "Ein Ring, um sie alle zu beherrschen, Ein Ring, um sie zu finden, Ein Ring, um sie alle zu bringen und sie in der Dunkelheit zu binden."
+        },
+        "countable": false,
+        "labelIds": ["LabelID", "LabelID"]
+      }
+}

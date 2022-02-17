@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 
 /** SHELF CONTROLLER
  * Class for actions triggered on Shelf docs in the DB.
- * The functions are intended to be triggered via Router an therefore accept HTTP- Requests and Responses as parameter.
+ * The functions are intended to be triggered via Router and therefore accept HTTP- Requests and Responses as parameter.
  */
 export class ShelfController extends CrudController {
     shelfModule: ShelfModule;
@@ -27,15 +27,17 @@ export class ShelfController extends CrudController {
      * A HTTP-Response which will be send containing a status code, and,
      * if successful, the id of the newly created Shelf document.
      */
+
+    //todo where is check for duplicate shelve ?
     public create(req: Request, res: Response): void {
         this.shelfModule.createShelf(req.body).then((id: mongoose.Types.ObjectId | null) => {
-            if (id) {
-                res.status(201).send(id)
+            if (id == null) {
+                res.status(500).send("Shelf already exists")
             } else {
-                res.sendStatus(500)
+                res.status(201).send(id)
             }
         }).catch((err: Error) => {
-            res.sendStatus(500)
+            res.status(500).send("InternalServerError");
             printToConsole(`Something went wrong adding a Shelf in crud-action create.\nERROR: ${err}`)
         })
     }
@@ -54,7 +56,7 @@ export class ShelfController extends CrudController {
                 .status(200)
                 .send(shelves)
         }).catch((err: Error) => {
-            res.sendStatus(500)
+            res.status(500).send("InternalServerError");
             printToConsole(`Something went wrong getting all Shelves in crud-action read.\nERROR: ${err}`)
         })
     }
@@ -68,14 +70,16 @@ export class ShelfController extends CrudController {
      */
     public read(req: Request, res: Response): void {
         this.shelfModule.getShelfById(new mongoose.Types.ObjectId(req.params.id)).then((shelf: Shelf | null) => {
+
             if (shelf) {
                 res.status(200)
                     .send(shelf)
             } else {
-                res.sendStatus(500)
+                res.sendStatus(404)
             }
+
         }).catch((err) => {
-            res.sendStatus(500)
+            res.status(500).send("InternalServerError");
             printToConsole(err)
         })
 
@@ -89,18 +93,20 @@ export class ShelfController extends CrudController {
      * @param res : e.Response
      * HTTP-Response containing a status code and, if successful, the updated Shelf document in its body
      */
-    public update(req: Request, res: Response): void {
-        this.shelfModule.updateShelfById(new mongoose.Types.ObjectId(req.params.id), req.body).then((shelf: Shelf | null) => {
-            if (shelf) {
-                res.status(200)
-                    .send(shelf)
-            }
-        }).catch((err) => {
-            res.sendStatus(500)
-            printToConsole("Something went wrong in updating a shelf.\n ERROR " + err)
-        })
 
-
+    public update(req: Request, res: Response): Shelf | null {
+        this.shelfModule.updateShelfById(new mongoose.Types.ObjectId(req.params.id), req.body)
+            .then(shelf => {
+                if (shelf !== null) {
+                    res.status(200).send(shelf)
+                } else res.status(404).send("No such shelf.");
+                return shelf;
+            }).catch((err) => {
+                res.status(500).send("InternalServerError");
+                printToConsole("Something went wrong in updating a shelf.\n ERROR " + err)
+                return null;
+            })
+        return null;
     }
 
     /** DELETE
@@ -116,9 +122,11 @@ export class ShelfController extends CrudController {
                 res.status(200)
                     .send(shelf)
             } else {
-                res.sendStatus(500)
+                res.status(404).send("No such shelf.");
             }
+        }).catch((err) => {
+            res.status(500).send("InternalServerError");
+            printToConsole("InternalServerError.\n ERROR " + err)
         })
-
     }
 }

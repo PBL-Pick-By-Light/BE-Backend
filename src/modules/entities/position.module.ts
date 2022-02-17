@@ -2,7 +2,7 @@ import {EntityModule} from "./entity.module";
 import {MongoModule} from "../mongo/mongo.module";
 import {Position} from "../../models/position.model";
 import mongoose from "mongoose";
-import {printToConsole} from "../../modules/util/util.module";
+import {printToConsole} from "../util/util.module";
 
 export class PositionModule extends EntityModule {
     constructor(mongo: MongoModule) {
@@ -20,7 +20,6 @@ export class PositionModule extends EntityModule {
         const positionId = await this.mongo.addPosition(positionData)
         if (positionId) {
             printToConsole(`[+] New position with id ${positionId} saved`);
-            this.IDsArray.push(positionId);
             return positionId;
         }
         return null;
@@ -71,7 +70,7 @@ export class PositionModule extends EntityModule {
     }
 
     /**
-     * Tells the mongo.module to update all Position doc with the given id
+     * Tells the mongo.module to update the Position doc with the given id
      * @param id
      * Id of the doc to update
      * @param updatedPosition
@@ -79,6 +78,19 @@ export class PositionModule extends EntityModule {
      */
     async updatePositionById(id: mongoose.Types.ObjectId, updatedPosition: Position): Promise<Position | null> {
         const pos = await this.mongo.updatePositionById(id, updatedPosition)
+        printToConsole(`Updated Position with id ${id}`)
+        return pos;
+    }
+
+    /**
+     * Tells the mongo.module to update the quantity attribute of the Position doc with the given id
+     * @param id
+     * Id of the doc to update
+     * @param newQuantity
+     * value of quantity after the update
+     */
+    async updatePositionQuantityById(id: mongoose.Types.ObjectId, newQuantity: number): Promise<Position|null>{
+        const pos = await this.mongo.updatePositionQuantityById(id, newQuantity);
         printToConsole(`Updated Position with id ${id}`)
         return pos;
     }

@@ -1,6 +1,6 @@
 import express from 'express'
 import {Request, Response} from 'express'
-import {userController} from '../controllers/index';
+import {userController} from '../controllers';
 import JWT from '../modules/auth/auth.module';
 
 export const router = express.Router({

@@ -1,6 +1,6 @@
     import {app} from '../../index';
     import chai from 'chai';
-    import * as mongoose from "mongoose";
+    import mongoose from "mongoose";
     import {Room, RoomClass} from "../../models/room.model";
     import {printToConsole} from "../../modules/util/util.module";
     import { RoomModule } from '../../modules/entities/room.module';

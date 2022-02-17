@@ -1,0 +1,32 @@
+{
+    "type": "array",
+    "description": "List of found positions.",
+    "items": {
+        "$ref": "./positions.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id": "PositionID",
+            "itemId": "ItemID",
+            "shelfId": "ShelfID",
+            "number": 8,
+            "quantity": 1
+        },
+        {   
+            "_id": "PositionID",
+            "itemId": "ItemID",
+            "shelfId": "ShelfID",
+            "number": 9,
+            "quantity": 3
+        },
+         {
+            "_id": "PositionID",
+            "itemId": "ItemID",
+            "shelfId": "ShelfID",
+            "number": 1,
+            "quantity": 8
+      }
+
+    ]
+}

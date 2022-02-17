@@ -5,7 +5,7 @@ import crypto from "crypto";
 import config from 'config';
 import {User} from "../../models/user.model";
 import permissions from "./permissions.json";
-import { UserModule } from "../../modules/entities/user.module";
+import { UserModule } from "../entities/user.module";
 import { MongoModule } from "../mongo/mongo.module";
 import { printToConsole } from "../util/util.module";
 
@@ -17,7 +17,7 @@ export class JWT {
      * check user role and get the corresponding url-array
      *  user has for some reason no role, use an empty array, so they can not access anything
      */
-    private setPermissions(role: any): string[]{
+    private static setPermissions(role: any): string[]{
         switch(role) {
             case 'admin':
                 return permissions.admin
@@ -35,26 +35,30 @@ export class JWT {
      * e.g. if originalURL=="/labels/delete/932hi3p89h34hi" make it url=="/labels/delete/"
      * leave urls like /labels/create unchanged
      */
-    private clearUrl(url: string, params: any): string {
+    private static clearUrl(url: string, params: any): string {
         if(params.id){
             return url.replace(params.id, "")
         }else if(params.name){
             return url.replace(params.name, "")
         }else if(params.lang){
             return url.replace(params.lang, "")
+        }else if(params.jwt){
+            return url.replace(params.jwt, "")
         } else {
             return url
         }
     }
 
-    private checkJwtBlacklist(user: User, jwtToken: string): boolean {
+    private static checkJwtBlacklist(user: User, jwtToken: string): boolean {
         if (!user.jwt) return false
-        if ( user.jwt === jwtToken ) return true
-        return false
+        return user.jwt === jwtToken;
+
     }
 
     /**
      * Checks if jwt was passed in request header and verifies jwt
+     * @param req express Request
+     * @param res express Response
      * @param next Function to be called after successful authentication
      * @throws error message if token is invalid
      */
@@ -95,7 +99,7 @@ export class JWT {
                     })
                     return
                 }
-                if (this.checkJwtBlacklist(user as User, authHeader as string)) {
+                if (JWT.checkJwtBlacklist(user as User, authHeader as string)) {
                     res
                     .status(406)
                     .send({
@@ -105,9 +109,9 @@ export class JWT {
                     return
                 }
                 
-                    let urls = this.setPermissions((user as User).role);
+                    let urls = JWT.setPermissions((user as User).role);
                 
-                let url = this.clearUrl(req.originalUrl, req.params);
+                let url = JWT.clearUrl(req.originalUrl, req.params);
                 
                 /* check for url in the with the user role corresponding url-array urls
                 * taken from permissions.json

@@ -1,0 +1,19 @@
+{
+    "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "isAdmin" : {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "name": "Vincent van Gogh",
+        "password": "The Starry Night",
+        "isAdmin": true
+      }
+}
