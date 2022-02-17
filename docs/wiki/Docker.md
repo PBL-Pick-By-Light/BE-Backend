@@ -1,6 +1,8 @@
+# Docker
+
 The docker configuration consists of two files:
-* [Dockerfile](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/Dockerfile)
-* [docker-compose.yml](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/docker-compose.yml)
+* [Dockerfile](../../Dockerfile)
+* [docker-compose.yml](../../docker-compose.yml)
 
 The **Dockerfile** manages the workflow to start the node-express-server in a docker container.
 A docker image can be build with a custom tag with the following command:

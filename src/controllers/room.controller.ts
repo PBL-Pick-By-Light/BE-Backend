@@ -8,7 +8,7 @@ import {printToConsole, fromJson} from"../modules/util/util.module";
 import mongoose from "mongoose";
 
 /**
- * Controller for all rooms, providing all functionalities e.g. (create, read, update, delete)
+ * Controller for all rooms, providing all functionality e.g. (create, read, update, delete)
  *     for the roomId router using methods of roomId module.
  *
  */

@@ -9,7 +9,7 @@ import {printToConsole} from"../modules/util/util.module";
 import mongoose from "mongoose";
 
 /**
- * Controller for all labelIds, providing all functionalities e.g. (create, read, update, delete)
+ * Controller for all labelIds, providing all functionality e.g. (create, read, update, delete)
  *     for the label router using methods of label module.
  */
 export class LabelController extends CrudController {

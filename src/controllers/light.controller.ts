@@ -107,7 +107,7 @@ export class LightController {
                 timer(() => this.sendTurnOffToES(req.body.itemId), req.body.itemId, req.body.duration)
             }
         } else {
-            if(errorResponse.status){
+            if(errorResponse & errorResponse.status){
                 res.status(500).send("Something went wrong: Status "+errorResponse.status+" Data: "+errorResponse.data)
             }else{
                 res.status(500).send("Something went wrong. Is BE connected to the right network?");

@@ -7,7 +7,7 @@ import {printToConsole} from"../modules/util/util.module";
 import mongoose from "mongoose";
 
 /**
- * Controller for all languages, providing all CRUD functionalities
+ * Controller for all languages, providing all CRUD functionality
  *     for the language router using methods of language module.
  */
 

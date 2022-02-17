@@ -7,7 +7,7 @@ import {printToConsole} from "../../modules/util/util.module";
 
 
 /**
- * Module for languages, providing all language functionalities
+ * Module for languages, providing all language functionality
  *     for language controller using methods of mongo module.
  */
 

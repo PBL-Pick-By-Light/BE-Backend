@@ -14,7 +14,7 @@ This pick-by-light-project (alias pbl-project) is intended to enable people to b
 
 It was developed as a students project in the course “SWT-Projekt” at [Technische Hochschule Mittelhessen (THM)](https://www.thm.de/site/en/).
 
-**Documentation** can be found in [Project Wiki](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/docs/wiki/Home.md)
+**Documentation** can be found in [Project Wiki](docs/wiki/Home.md)
 
 ## Technologies
 
@@ -67,6 +67,7 @@ Defined in [config](src/config/config.json)
 Defined in [default](config/default.json), [docker_dev](config/docker_dev.json), [docker_prod](config/docker_prod.json) and [test](config/test.json)
 
 + disableAuth → if set true any authorization functionality will be turned off - used for testing and development only!
++ disableLDAP → if set true only local authentication is used!
 
 ### Config constants
 
@@ -75,7 +76,7 @@ Defined in [constants](src/config/constants.ts)
 + jwtkey
     → JWT stands for **json web token** and is a standardized acces token, which secures data between two parties.
     → An implementation of JWT can be found at [https://jwt.io/](https://jwt.io/).
-    → The jwt key defined in config constants is used to sign and verify the payload in the files (see [auth.controller.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/src/controllers/auth.controller.ts) and [auth.module.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/src/modules/auth/auth.module.ts))
+    → The jwt key defined in config constants is used to sign and verify the payload in the files (see [auth.controller.ts](src/controllers/auth.controller.ts) and [auth.module.ts](src/modules/auth/auth.module.ts))
 
 + expirationTime → time until jwtkey expires
 + requiredLangs → languages that are required ("en" as English, "de" as German)

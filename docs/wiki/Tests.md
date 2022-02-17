@@ -1,14 +1,15 @@
-# How to run tests
+# Tests
+
+## How to run tests
 Make sure your testing database is empty.
 Execute tests defined in [tests](src/tests/testdata)
 ```
 NODE_ENV=test npm run test
 ``` 
 
-[Test files:](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests)
-# [Chai](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests/chai)
+## [Chai](../../src/tests/chai)
 tests using the framework chai, which can be run using scripts.
-# [http](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests/http)
+## [http](../../src/tests/http)
 http-tests.
 Start mongo and node server
 ```
@@ -37,13 +38,13 @@ Always make sure you are using ids that exist in your database when using http t
 You can copy-paste those ids from the console log scripts like addData create.
 
 For ES Test: Make sure the ip-address of your testdata fits your ES-Server/Test-Server. Change the ip-address attribute in the room
-entity created in function addESTestData() in [testdata.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/tests/scripts/testdata.ts) if not.
-# [scripts](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests/scripts)
+entity created in function addESTestData() in [testdata.ts](../../src/tests/scripts/testdata.ts) if not.
+## [scripts](../../src/tests/scripts)
 for adding and removing testdata as well as starting the tests.
 Use 
 ```
 npm run
 ```
 to see all currently available scripts.
-# [testdata](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests/testdata)
+## [testdata](../../src/tests/testdata)
 Some basic testdata in JSON format.
