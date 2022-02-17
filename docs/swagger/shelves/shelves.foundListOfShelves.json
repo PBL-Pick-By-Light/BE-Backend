@@ -1,0 +1,21 @@
+{
+    "type": "array",
+    "description": "List of found shelves.",
+    "items": {
+        "$ref": "./shelves.withID.json"
+    },
+    "example": 
+    [
+        {   
+            "_id": "ShelfID",
+            "number": 8,
+            "roomId": "RoomID"   
+        },
+        {
+            "_id": "ShelfID",
+            "number": 1,
+            "roomId": "RoomID" 
+        }
+
+    ]
+}

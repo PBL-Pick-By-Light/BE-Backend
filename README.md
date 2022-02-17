@@ -14,7 +14,7 @@ This pick-by-light-project (alias pbl-project) is intended to enable people to b
 
 It was developed as a students project in the course “SWT-Projekt” at [Technische Hochschule Mittelhessen (THM)](https://www.thm.de/site/en/).
 
-**Documentation** can be found in [Project Wiki](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/wikis/home)
+**Documentation** can be found in [Project Wiki](https://github.com/PBL-Pick-By-Light/BE-Backend/-/wikis/home)
 
 ## Technologies
 
@@ -75,7 +75,7 @@ Defined in [constants](src/config/constants.ts)
 + jwtkey
     → JWT stands for **json web token** and is a standardized acces token, which secures data between two parties.
     → An implementation of JWT can be found at [https://jwt.io/](https://jwt.io/).
-    → The jwt key defined in config constants is used to sign and verify the payload in the files (see [auth.controller.ts](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/blob/development/src/controllers/auth.controller.ts) and [auth.module.ts](https://git.thm.de/softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend/-/blob/development/src/modules/auth/auth.module.ts))
+    → The jwt key defined in config constants is used to sign and verify the payload in the files (see [auth.controller.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/src/controllers/auth.controller.ts) and [auth.module.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/src/modules/auth/auth.module.ts))
 
 + expirationTime → time until jwtkey expires
 + requiredLangs → languages that are required ("en" as English, "de" as German)

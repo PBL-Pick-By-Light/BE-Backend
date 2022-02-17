@@ -1,0 +1,23 @@
+{
+    "type": "object",
+      "description": "Create new Label",
+      "properties": {
+        "name": {
+            "type":"object",
+                "properties": {
+                    "de": "string",
+                    "en": "string"
+                }
+        },
+        "color": {
+            "type": "string"
+        }
+    },
+      "example": {
+        "name": {
+            "en": "LabelNameEN",
+            "de": "LabelNameDE"
+        },
+        "color": "#DC2121"
+      }
+}

@@ -1,0 +1,21 @@
+{
+    "type": "array",
+    "description": "List of found settings.",
+    "items": {
+        "$ref": "./settings.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id":"SettingsID",
+            "colors": ["#DC2121", "#810707"],
+            "language": "EN"
+        },
+        {
+            "_id":"SettingsID",
+            "colors": ["#2D0101", "#F65959"],
+            "language": "DE"
+        }
+
+    ]
+}

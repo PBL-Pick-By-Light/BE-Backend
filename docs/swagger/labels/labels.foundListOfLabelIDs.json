@@ -1,0 +1,13 @@
+{
+    "type": "array",
+    "description": "List of label IDs.",
+    "items": {
+        "type": "string"
+    },
+    "example": 
+    [
+        "LabelID",
+        "LabelID",
+        "LabelID"
+    ]
+}

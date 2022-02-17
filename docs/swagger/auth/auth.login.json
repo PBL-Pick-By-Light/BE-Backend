@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
+    },
+    "example": {
+      "name": "Vincent van Gogh",
+      "password": "The Starry Night"
+    }
+}

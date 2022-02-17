@@ -1,0 +1,26 @@
+{
+    "type": "array",
+    "description": "List of found rooms.",
+    "items": {
+        "$ref": "./rooms.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id": "RoomID",
+            "name": {
+                "en": "NameEN",
+                "de": "NameDE" 
+            },
+            "ipAddress": "RoomIPAddress."
+     },
+        {
+            "_id": "RoomID",
+            "name": {
+                "en": "NameEN",
+                "de": "NameDE" 
+            },
+            "ipAddress": "RoomIPAddress."
+      }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "type": "object",
+      "description": "Create new Position",
+      "properties": {
+        "itemId": {
+            "type":"string"
+        },
+        "number": {
+            "type": "number"
+        },
+        "shelfId": {
+            "type": "string"
+        },
+        "quantity": {
+            "type": "number"
+        }
+    },
+      "example": {
+        "itemId": "ItemID",
+        "shelfId": "ShelfID",
+        "number": 8,
+        "quantity": 1
+      }
+}

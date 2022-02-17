@@ -1,0 +1,19 @@
+{
+    "type": "object",
+      "description": "Create new settings object.",
+      "properties": {
+        "colors": {
+          "type":"array",
+          "items": {
+              "type": "string"
+          }
+        },
+        "language": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "colors": ["#DC2121", "#810707"],
+        "language": "EN"
+      }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "object",
+      "description": "Create new Language",
+      "properties": {
+        "_id": { 
+            "type": "string"
+        },
+        "lang": {
+            "type":"string"
+        },
+        "required": {
+            "type": "boolean"
+        }
+    },
+      "example": {
+        "_id": "LanguageID",
+        "lang": "EN",
+        "required": false
+      }
+}

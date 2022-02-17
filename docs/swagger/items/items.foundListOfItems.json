@@ -1,0 +1,37 @@
+{
+    "type": "array",
+    "description": "List of found items.",
+    "items": {
+        "$ref": "./items.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id": "ItemID",
+            "name": {
+                "en": "Golden ring",
+                "de": "goldener Ring"
+            },
+            "description": {
+                "en": "One Ring to rule them all, one Ring to find them, one Ring to bring them all and in the darkness bind them...",
+                "de": "Ein Ring, um sie alle zu beherrschen, Ein Ring, um sie zu finden, Ein Ring, um sie alle zu bringen und sie in der Dunkelheit zu binden."
+            },
+            "countable": false,
+            "labelIds": ["LabelID"]
+        },
+        {
+            "_id": "ItemID",
+            "name": {
+                "en": "SSV Normandy SR-1",
+                "de": "SSV Normandy SR-1"
+            },
+            "description": {
+                "en": "Systems Alliance Space Vehicle Normandy Stealth Reconnaissance-1",
+                "de": "Systems Alliance Space Vehicle Normandy Stealth Reconnaissance-1"
+            },
+            "countable": false,
+            "labelIds": ["LabelID", "LabelID"] 
+        }
+
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "properties": {
+      "Message": {
+        "type": "string"
+      }
+    },
+    "example": {
+      "Message": "OK!"
+    }
+}
