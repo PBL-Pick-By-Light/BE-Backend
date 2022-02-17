@@ -7,8 +7,11 @@ import { Settings, SettingsClass } from '../models/settings.model';
 import { LanguageModule } from '../modules/entities/language.module';
 
 /**
- * Controller for all items, providing all CRUD functionalities
- *     for the item router using methods of item module.
+ * Controller for settings of the Pick-By-Light-Projekt
+ *     THIS is NOT a CRUD-Controller.
+ *     To avoid conflicting settings there will never be more than one settings-doc in the database.
+ *    A new setting doc might get created if there were none before, but after that it will only be changed.
+ *    Therefore, there is one function createOrUpdate instead of separate functions for create and update.
  */
 
 export class SettingsController {
@@ -47,6 +50,8 @@ export class SettingsController {
                     }
                     res.status(200).contentType('json').send(resultJson);
                 }))
+            } else {
+                res.status(404).contentType("application/json").send({status: "Not Found"});
             }
         }).catch(() => res.sendStatus(500));
     }

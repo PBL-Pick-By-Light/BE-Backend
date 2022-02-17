@@ -2,8 +2,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "password": "test1"
+    "name": "user1",
+    "password": "admin"
 }
 
 ###
@@ -20,16 +20,27 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-    "name": "admin",
+    "name": "user1",
     "password": "test1",
-    "role": "admin"
+}
+
+
+###
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "name": "kzeh2",
+    "firstname": "Konrad",
+    "lastname": "Zuse",
+    "password": "esuzdarnok",
+    "email": "konrad@zuse.de",
+    "language": "de",
+    "searchColor":"0xFEFEFE"
 }
 
 ###
 
-DELETE http://localhost:3000/auth/delete/61f11cd25d546d2699bf4c1c
-Content-Type: application/json
+DELETE http://localhost:3000/auth/delete/620e27684be86fc02f7eeb65
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NDMxOTI2MjAsImV4cCI6MTY0Njc5MjYyMH0.wcMtkeYbWM1OTRE3xKn2g4blLk5UQQy_jwdkSfzD4LA
-
-{
-}

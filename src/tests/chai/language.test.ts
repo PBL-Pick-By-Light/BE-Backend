@@ -1,7 +1,7 @@
 import {app} from '../../index';
 import chai from 'chai';
 import chaiHttp from "chai-http";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import {printToConsole} from "../../modules/util/util.module";
 
 chai.use(chaiHttp);

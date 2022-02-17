@@ -8,10 +8,9 @@ import { roomTest } from './room.test';
 import {labelTest} from "./label.test";
 import {languageTest} from "./language.test";
 import {userTest} from "./user.test";
-import {authTest} from "./authentification.test";
+import {authTest} from "./auth.test";
 
 chai.use(chaiHttp)
-const expect = chai.expect
 
 // Test base route to return string
 describe('Base Route Test', () => {
@@ -30,9 +29,7 @@ labelTest()
 positiontest()
 itemTest()
 userTest()
-//authTest()
-
+authTest()
 // languageTest() uses language "en" that is hardcoded into the database when running script 'addData'
 // make sure it actually is in the database, otherwise some tests will fail
-
-//languageTest()
+languageTest()

@@ -1,5 +1,4 @@
-import * as mongoose from "mongoose";
-import { languageController } from '../controllers/index';
+import mongoose from "mongoose";
 
 /** SETTINGS
  * Settings interface, representing the Settings document in MongoDB

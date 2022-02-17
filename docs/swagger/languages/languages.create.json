@@ -1,0 +1,12 @@
+{
+    "type": "object",
+      "description": "Create new Language",
+      "properties": {
+        "lang": {
+            "type":"string"
+        }
+    },
+      "example": {
+        "lang": "EN"
+      }
+}

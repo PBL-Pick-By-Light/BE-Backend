@@ -1,0 +1,54 @@
+###
+
+POST http://localhost:3000/users/create
+Content-Type: application/json
+sessionid: 1111
+
+
+{
+
+    "name": "new_user",
+    "password": "testpassword",
+    "role": "editor"
+}
+
+###
+
+GET http://localhost:3000/users/getAll
+sessionid: 1111
+cuid: system
+
+###
+
+GET http://localhost:3000/users/getByName/user2
+sessionid: 1111
+cuid: system
+
+###
+
+POST http://localhost:3000/users/update/620e40fe0bb9ff1cd4efe651
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "searchColor": "xe923f",
+    "password": "thorsten"
+}
+
+###
+
+POST http://localhost:3000/users/update/620e40fe0bb9ff1cd4efe651
+Content-Type: application/json
+sessionid: 1111
+
+{
+    "firstname": "Alan",
+    "lastname": "Turing",
+    "password": "gnirutnala"
+}
+
+###
+
+DELETE http://localhost:3000/users/delete/61f1be0b3b3f8b9f7bf61a75
+sessionid: 1111
+cuid: system

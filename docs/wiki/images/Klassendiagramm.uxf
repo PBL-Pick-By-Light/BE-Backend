@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>20</y>
+      <w>260</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Item
+--
+-itemID:int 
+-name:String 
+-description:String
+--
++positionRequest():list&lt;any&gt;
+..je 1 Instanz von:room, shelf, container
++getLabels():list&lt;Label&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>390</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Shelf
+--
+-shelfID:int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>230</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Position
+--
+-positionID:int
+-shelfID:ID
+-row:int
+-col:int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>220</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Label
+--
+-labelID:int 
+-labeling:String 
+--
++searchItems():list&lt;Item&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>540</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Room
+--
+-roomID:String {standard format}
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>310</y>
+      <w>290</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+User
+--
+-session: String
+-benutzerkennung:String
+-isAdmin:boolean
+--
++logIn()
++logOut()
++registrate()
++findItems(list&lt;labelID&gt;):list&lt;Item&gt; 
+..verwendet label.searchItems()
++createItemA(name:String,description:String)
++deleteItemA(itemID):Item
++createPositionA(shelfID:int,row:int,col:int)
++deletePositionA(positionID:int):Position
++createShelfA(roomID:String)
++deleteShelfA(shelfID:int):Shelf
++createRoomA()
++deleteRoomA(roomID:String):Room
++createLabel(labeling:String)
++deleteLabel(labelID:int):labelID:int
+
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>140</x>
+      <y>390</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Passwortverwaltung
+mit LDAP
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>190</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+FEKommunikation
+--
+
+--
+_+sendLabels():list&lt;Label&gt;_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1040</x>
+      <y>10</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Package::FatClass
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>140</x>
+      <y>520</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>die Funktionen *A
+dürfen nur von dem
+Admin ausgeführt werden</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

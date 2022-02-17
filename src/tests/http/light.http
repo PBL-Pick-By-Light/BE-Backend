@@ -5,7 +5,7 @@ sessionid: 1111
 cuid: system
 
 {
-  "itemId": "61eac6941715355695cc17cd",
+  "itemId": "620b7837fe2394f0e1a84e89",
   "duration": 8,
   "color": "#2a33FF"
 }
@@ -18,7 +18,8 @@ Content-Type: application/json
 cuid: system
 
 {
-  "itemId": "61eac6941715355695cc17cd"
+  "itemId": "620b7837fe2394f0e1a84e89",
+  "color": "#111111"
 }
 
 ###

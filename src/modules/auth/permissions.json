@@ -18,6 +18,7 @@
         "/positions/getAll",
         "/positions/update/",
         "/positions/findById/",
+        "/positions/updateQuantity/",
         "/positions/findByItemId/",
         "/positions/findIdsByItemId",
         "/positions/delete/",
@@ -31,7 +32,15 @@
         "/shelves/update/",
         "/shelves/getAll",
         "/shelves/getById/",
-        "/shelves/delete"
+        "/shelves/delete",
+        "/users/create",
+        "/users/update/",
+        "/users/getAll",
+        "/users/getByName/",
+        "/users/read/",
+        "/users/delete/",
+        "/lights/turnOn",
+        "/lights/turnOff"
     ],
     "editor": [
         "/auth/logout",
@@ -52,13 +61,16 @@
         "/positions/update/",
         "/positions/findById/",
         "/positions/findByItemId/",
+        "/positions/updateQuantity/",
         "/positions/findIdsByItemId",
         "/positions/delete/",
         "/rooms/getAll",
         "/rooms/findById/",
         "/rooms/findByItemId",
         "/shelves/getAll",
-        "/shelves/getById/"
+        "/shelves/getById/",
+        "/lights/turnOn",
+        "/lights/turnOff"
     ],
     "user": [
         "/auth/logout",
@@ -72,10 +84,13 @@
         "/positions/findById/",
         "/positions/findByItemId/",
         "/positions/findIdsByItemId",
+        "/positions/updateQuantity/",
         "/rooms/getAll",
         "/rooms/findById/",
         "/rooms/findByItemId",
         "/shelves/getAll",
-        "/shelves/getById/"
+        "/shelves/getById/",
+        "/lights/turnOn",
+        "/lights/turnOff"
     ]
 }

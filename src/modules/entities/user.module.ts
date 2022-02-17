@@ -65,12 +65,13 @@ export class UserModule extends EntityModule {
      * @param id : mongoose.Types.ObjectId
      * @return
      */
-    getUserById(id: any) {
-        this.mongo.findUser({_id: id}).then(user => {
+    getUserById(id: any): Promise<User| null> {
+        return this.mongo.findUser({_id: id}).then(user => {
             printToConsole(user);
             return user;
         }).catch(err => {
             printToConsole(err);
+            return null
         })
     }
 

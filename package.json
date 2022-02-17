@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.thm.de:softwaretechnik-projekt-pick-by-light-system-wise21_22/pbl-backend/pbl-backend.git"
+    "url": "git@github.com/PBL-Pick-By-Light/BE-Backend.git
   },
   "author": "pbl-backend-team",
   "license": "ISC",

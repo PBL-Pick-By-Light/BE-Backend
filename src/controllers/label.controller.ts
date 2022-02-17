@@ -85,23 +85,12 @@ export class LabelController extends CrudController {
 
 
     /**
-     * calls findLabelbyName() method of label.module, to find all label properties by labelname
-     * @param req
-     * @param res
+     * Find the ids of all Labels connected to a specific item
+     * @param req a Request containing the id of the item as parameter
+     * @param res a Response containing an Array of the ids of the Labels
      */
-    public findLabelByName(req: Request, res: Response): void {
-        let name: string = req.params.name;
-        this.labelModule.findLabelbyName(name).then(result => {
-            if (result) {
-                res.status(200).send(result);
-            } else {
-                res.status(500).send("Internal Server Error (the searched for object might not exist")
-            }
-        }).catch(() => res.status(500).send("Internal Server Error"));
-    }
-
-    public getLabelIdsByItemId(req: Request, res: Response): void {
-        this.labelModule.getLabelIdsByItemId(new mongoose.Types.ObjectId(req.params.id)).then((ids) => {
+    public findLabelIdsByItemId(req: Request, res: Response): void {
+        this.labelModule.findLabelIdsByItemId(new mongoose.Types.ObjectId(req.params.id)).then((ids) => {
             if (ids) {
                 res.status(200).send(ids)
             } else {
@@ -113,12 +102,12 @@ export class LabelController extends CrudController {
     }
 
     /**
-     * calls getLabelsByItemId() method of label.module, to get all labels describing an item specified by id
+     * calls findLabelsByItemId() method of label.module, to get all labels describing an item specified by id
      * @param req
      * @param res
      */
-    public getLabelsByItemId(req: Request, res: Response): void {
-        this.labelModule.getLabelsByItemId(new mongoose.Types.ObjectId(req.params.id)).then((result) => {
+    public findLabelsByItemId(req: Request, res: Response): void {
+        this.labelModule.findLabelsByItemId(new mongoose.Types.ObjectId(req.params.id)).then((result) => {
             if (result) {
                 res.status(200).send(result)
             } else {

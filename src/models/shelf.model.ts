@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import {Room} from "./room.model";
 
 /** SHELF
  * Shelf interface, representing the Shelf document in MongoDB

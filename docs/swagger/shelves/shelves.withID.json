@@ -1,0 +1,20 @@
+{
+    "type": "object",
+      "description": "Full shelf structure.",
+      "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "number": {
+            "type":"number"
+        },
+        "roomId": {
+            "type": "string"
+        }
+    },
+      "example": {
+        "_id": "ShelfID",
+        "number": 8,
+        "roomId": "RoomID"  
+      }
+}

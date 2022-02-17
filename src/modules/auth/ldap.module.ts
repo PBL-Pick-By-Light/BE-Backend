@@ -1,12 +1,11 @@
 import {ldapConstants} from "../../config/config.json"
-import { printToConsole } from '../util/util.module';
 import {authenticate} from 'ldap-authentication'
 
 export class LDAPModule {
-    private _LDAP_SEARCH_BASE: string;
-    private _dnAttribute: string;
-    private _dnBase: string;
-    private _LDAP_OPTS: unknown;
+    private readonly _LDAP_SEARCH_BASE: string;
+    private readonly _dnAttribute: string;
+    private readonly _dnBase: string;
+    private readonly _LDAP_OPTS: unknown;
 
     constructor() {
         this._dnAttribute = ldapConstants.dnAttribute;
@@ -17,7 +16,7 @@ export class LDAPModule {
 
     public async verify(username: string, password: string): Promise<boolean> {
         /* eslint-disable-next-line*/
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             const options = {
                 ldapOpts: this._LDAP_OPTS,
                 userDn: this._dnAttribute + "=" + username + "," + this._dnBase,

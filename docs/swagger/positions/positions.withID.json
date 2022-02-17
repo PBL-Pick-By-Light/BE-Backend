@@ -1,0 +1,28 @@
+{
+    "type": "object",
+      "description": "Full position structure.",
+      "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "itemId": {
+            "type":"string"
+        },
+        "number": {
+            "type": "number"
+        },
+        "shelfId": {
+            "type": "string"
+        },
+        "quantity": {
+            "type": "number"
+        }
+    },
+      "example": {
+        "_id": "PositionID",
+        "itemId": "ItemID",
+        "shelfId": "ShelfID",
+        "number": 8,
+        "quantity": 1
+      }
+}

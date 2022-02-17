@@ -1,20 +1,26 @@
 import {app} from '../../index';
 import chai from 'chai';
 import chaiHttp from "chai-http";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import {generateEnglishGermanMap} from "../../models/language.model";
-import {positionController, roomController, shelfController} from "../../controllers";
 import {printToConsole} from "../../modules/util/util.module";
+import { PositionModule } from '../../modules/entities/position.module';
+import { MongoModule } from '../../modules/mongo/mongo.module';
+import { RoomModule } from '../../modules/entities/room.module';
+import { ShelfModule } from '../../modules/entities/shelf.module';
 
 chai.use(chaiHttp);
 chai.expect;
 
 export async function itemTest() {
 
-    let mongoose = require('mongoose');
     let itemId: string;
     let labelId1: string;
     let labelId2: string;
+    const mongoModule: MongoModule = new MongoModule();
+    const positionModule: PositionModule = new PositionModule(mongoModule);
+    const roomModule: RoomModule = new RoomModule(mongoModule);
+    const shelfModule: ShelfModule = new ShelfModule(mongoModule);
 
     describe('Item Route Tests', async () => {
 
@@ -112,20 +118,20 @@ export async function itemTest() {
         })
 ////
         it(`should return 200 and the correct item`, async () => {
-            const roomId = await roomController.roomModule.createRoom({
+            const roomId = await roomModule.createRoom({
                 name: generateEnglishGermanMap("roomafdssdfa", "Raumafddsdsa"),
                 ipAddress: "90.186.119.142 "
             })
             let shelfId: mongoose.Types.ObjectId | null;
             let positionId: mongoose.Types.ObjectId | null;
             if (roomId) {
-                shelfId = await shelfController.shelfModule.createShelf({number: 1, "roomId": roomId})
+                shelfId = await shelfModule.createShelf({number: 1, "roomId": roomId})
                 if (shelfId && itemId) {
-                    positionId = await positionController.positionModule.createPosition({
+                    positionId = await positionModule.createPosition({
                         number: 2,
                         quantity: 2,
-                        itemId: mongoose.Types.ObjectId(itemId),
-                        shelfId: shelfId
+                        shelfId: shelfId,
+                        itemId: new mongoose.Types.ObjectId(itemId)
                     })
                 } else {
                     printToConsole("Fehler beim erstellen von shelf oder itemid")
@@ -137,13 +143,13 @@ export async function itemTest() {
                 chai.expect(res.status).to.equal(200);
                 chai.expect(res.body._id).to.equal(itemId);
                 if (roomId) {
-                    await roomController.roomModule.deleteRoomById(roomId)
+                    await roomModule.deleteRoomById(roomId)
                 }
                 if (shelfId) {
-                    await shelfController.shelfModule.deleteShelfById(shelfId)
+                    await shelfModule.deleteShelfById(shelfId)
                 }
                 if (positionId) {
-                    await positionController.positionModule.deletePositionById(positionId)
+                    await positionModule.deletePositionById(positionId)
                 }
             })
         })

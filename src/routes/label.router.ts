@@ -29,24 +29,12 @@ router.get('/findById/:id', (req: Request, res: Response) => {
     JWT.authenticate(req, res, () => labelController.read(req, res))
 })
 
-router.get('/findByName/:name', (req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => labelController.findLabelByName(req, res))
-})
-
-router.get('/getLabelIdsByItemId/:id',((req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => labelController.getLabelIdsByItemId(req, res))
-}))
-
-router.get('/getLabelsByItemId/:id', ((req:Request, res: Response) => {
-    JWT.authenticate(req, res, () => labelController.getLabelsByItemId(req, res))
-}))
-
 router.get('/findIdsByItemId/:id',((req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => (labelController.getLabelIdsByItemId(req, res)))
+    JWT.authenticate(req, res, () => (labelController.findLabelIdsByItemId(req, res)))
 }))
 
 router.get('/findByItemId/:id', ((req:Request, res: Response) => {
-    JWT.authenticate(req, res, () => (labelController.getLabelsByItemId(req, res)))
+    JWT.authenticate(req, res, () => (labelController.findLabelsByItemId(req, res)))
 }))
 
 // DELETE Routes

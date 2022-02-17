@@ -2,7 +2,7 @@ import {EntityModule} from "./entity.module";
 import {MongoModule} from "../mongo/mongo.module";
 import {Label, LabelClass} from "../../models/label.model";
 import mongoose from "mongoose";
-import {printToConsole} from "../../modules/util/util.module";
+import {printToConsole} from "../util/util.module";
 
 /**
  * Module for labelIds, providing all label functionalities
@@ -42,21 +42,13 @@ export class LabelModule extends EntityModule {
         return this.mongo.findLabel({_id: id});
     }
 
-    /**
-     * calls findLabel() method of mongo.module, to find all label properties by labelname
-     * @param {String} name
-     * @return {Label|null} label
-     */
-    async findLabelbyName(name: string): Promise<Label | null> {
-        return this.mongo.findLabel({name: name});
-    }
 
     /**
      * finds all labelIds corresponding to a given item
      * @param {mongoose.Types.ObjectId} id
      * @return {mongoose.Types.ObjectId[]} labelIds
      */
-    async getLabelIdsByItemId(id: mongoose.Types.ObjectId): Promise<mongoose.Types.ObjectId[]> {
+    async findLabelIdsByItemId(id: mongoose.Types.ObjectId): Promise<mongoose.Types.ObjectId[]> {
         const labelIds = await this.mongo.getItemLabelIds(id)
         printToConsole(labelIds)
         return labelIds;
@@ -68,7 +60,7 @@ export class LabelModule extends EntityModule {
      * @param {mongoose.Types.ObjectId} id
      * @return {mongoose.Types.ObjectId[]} labelIds
      */
-    async getLabelsByItemId(id: mongoose.Types.ObjectId): Promise<Label[]> {
+    async findLabelsByItemId(id: mongoose.Types.ObjectId): Promise<Label[]> {
         const labels = await this.mongo.getItemLabels(id)
         printToConsole(labels)
         return labels;

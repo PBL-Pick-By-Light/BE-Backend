@@ -6,19 +6,7 @@ cuid: system
 
 ###
 
-POST http://localhost:3000/items/findByName
-Content-Type: application/json
-sessionid: 1111
-cuid: system
-
-{
-  "name" : "Splitter Narsils",
-  "language" : "de"
-}
-
-###
-
-GET http://localhost:3000/items/findById/61f159eef02a23e007f4813d
+GET http://localhost:3000/items/findById/620cbeaecc90432d95b598a0
 sessionid: 1111
 cuid: system
 
@@ -73,10 +61,7 @@ sessionid: 1111
 
 ###
 
-DELETE http://localhost:3000/items/delete/61e97a853a5680ab2c80ae60
+DELETE http://localhost:3000/items/delete/620cbeaecc90432d95b598a6
 Content-Type: application/json
 sessionid: 1111
 cuid: system
-
-{
-}

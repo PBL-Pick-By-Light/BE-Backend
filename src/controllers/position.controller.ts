@@ -86,6 +86,7 @@ export class PositionController extends CrudController {
                 res.sendStatus(500)
             }
         }).catch((err) => {
+            printToConsole(err)
             res.status(500).send("Internal Server Error")
         })
     }
@@ -218,6 +219,54 @@ export class PositionController extends CrudController {
                 res.sendStatus(400)
             }
         }).catch((err) => {
+            printToConsole(err)
+            res.status(500).send("couldn't be updated")
+        })
+    }
+
+    /** UPDATEQUANTITY
+     * Finds and updates the quantity attribute of a Position document in the DB using its id.
+     * @param req :express.Request
+     * HTTP-Request containing the id of the Position document to update in the params (in the URL)
+     * and the new quantity
+     * @param res :express.Response
+     * HTTP-Response containing a statuscode and, if successful, the updated Position document in its body
+     */
+    async updateQuantity(req:express.Request, res:express.Response): Promise<void> {
+        //all attributes have to be defined
+        if (typeof req.body.itemId === 'undefined'|| typeof req.body.quantity === 'undefined' ) {
+            res.status(400).send("not all attributes are given")
+            return
+        }
+
+        //only quantity is updateable
+        const id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(req.params.id);
+
+        //check quantity only is set, when item is countable
+        if (req.body.itemId) {
+            let item: Item | null = await this.itemModule.getItemById(new mongoose.Types.ObjectId(req.body.itemId))
+            if (item?.countable && !req.body.quantity
+                || !item?.countable && req.body.quantity
+                || !item && req.body.quantity) {
+                res.status(400).send("countable doesn't fit to quantity")
+                return
+            }
+        } else {
+            if (req.body.quantity) {
+                res.status(400).send("countable doesn't fit to quantity")
+                return
+            }
+        }
+
+        //update position
+        this.positionModule.updatePositionQuantityById(id, req.body).then((newPosition: Position | null) => {
+            if (newPosition) {
+                res.status(200).send(newPosition)
+            } else {
+                res.sendStatus(400)
+            }
+        }).catch((err) => {
+            printToConsole(err)
             res.status(500).send("couldn't be updated")
         })
     }

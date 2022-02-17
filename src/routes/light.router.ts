@@ -12,11 +12,9 @@ export const router = express.Router({
  */
 
 router.post("/turnOn", (req: express.Request, res: express.Response)=>{
-    lightController.turnOn(req, res)
-    //JWT.authenticate(req, res, ()=>{ lightController.turnOn(req, res)})
+    JWT.authenticate(req, res, ()=>{ lightController.turnOn(req, res)})
 })
 
 router.post("/turnOff", (req: express.Request, res: express.Response)=>{
-    lightController.turnOff(req, res)
-    //JWT.authenticate(req, res, () => lightController.turnOff(req, res))
+    JWT.authenticate(req, res, () => lightController.turnOff(req, res))
 })

@@ -1,0 +1,26 @@
+{
+    "type": "array",
+    "description": "List of found labels.",
+    "items": {
+        "$ref": "./labels.withID.json"
+    },
+    "example": 
+    [
+        {
+            "_id": "LabelID",
+            "name": {
+                "en": "LabelNameEN",
+                "de": "LabelNameDE"
+            },
+            "color": "LabelColor"
+        },
+        {
+            "_id": "LabelID",
+            "name": {
+                "en": "LabelNameEN",
+                "de": "LabelNameDE"
+            },
+            "color": "LabelColor"
+        }
+    ]
+}
