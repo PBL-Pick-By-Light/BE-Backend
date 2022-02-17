@@ -6,7 +6,7 @@ git clone https://github.com/PBL-Pick-By-Light/BE-Backend.git
 ```
 ## Local Build
 **Step 1:**
-Install all required node dependencies listed in [package.json](./package.json) to local system and run server locally.
+Install all required node dependencies listed in [package.json](../../package.json) to local system and run server locally.
 
 ```
 cd pbl-backend
@@ -14,8 +14,7 @@ npm install
 ```
 
 Create and run Mongo database in docker
-See [description](#mongo-database)
-
+See [Mongo Documentation](Mongo.md)
 
 **Step 3:**
 Start project described in 1a-c
