@@ -7,5 +7,5 @@ Prints out any given debugging log if variable debug is set true. The variable d
 ### fromJson
 Converts a JSON object into a map. Used for mapping descriptions, names, etc. in multiple languages.
 
-## [timer](../../src/controllers/timer.ts)
+## [timer](../../src/modules/util/timer.ts)
 Holds functions and variables for sending turnOff-requests to Embedded Systems  automatically after the given duration in the turnOn-request. 

@@ -23,5 +23,5 @@ sudo ./startup.sh
 - enter into your browser
 
 ```
-http://localhost:8081/pbl-backend//swagger
+http://localhost:8081/pbl-backend/swagger
 ```

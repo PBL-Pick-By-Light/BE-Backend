@@ -162,9 +162,6 @@
       * App entry point
       * Port definition
       * Middleware registration
-         ```ts
-         app.use(express.json())
-         ```
 
 * [.gitignore](../../.gitignore) lists files to not include in git repo
 

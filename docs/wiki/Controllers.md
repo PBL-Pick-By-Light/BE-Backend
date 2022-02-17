@@ -1,4 +1,4 @@
-# [Controllers](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/controllers)
+# [Controllers](../../src/controllers)
 For handling all the http-Requests for a specific entity by checking for errors and if there are none, calling the fitting module. 
 
 ## [auth.controller](../../src/controllers/auth.controller.ts)
