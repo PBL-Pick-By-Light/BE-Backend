@@ -37,7 +37,7 @@ Always make sure you are using ids that exist in your database when using http t
 You can copy-paste those ids from the console log scripts like addData create.
 
 For ES Test: Make sure the ip-address of your testdata fits your ES-Server/Test-Server. Change the ip-address attribute in the room
-entity created in function addESTestData() in [testdata.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/src/tests/scripts/testdata.ts) if not.
+entity created in function addESTestData() in [testdata.ts](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/tests/scripts/testdata.ts) if not.
 # [scripts](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/tests/scripts)
 for adding and removing testdata as well as starting the tests.
 Use 
