@@ -1,5 +1,4 @@
-
-## [Authentication](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/controllers/auth.controller.ts)
+# [Authentication](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/controllers/auth.controller.ts)
 Connected to auth.router.
 
 Example autentication requests can be found in [auth.http](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/tests/http/auth.http)

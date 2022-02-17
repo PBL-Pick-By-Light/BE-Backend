@@ -1,3 +1,5 @@
+# Configuration files
+
 ### Config variables
 
 Defined in [config (src/config/config.json)](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/src/config/config.json)

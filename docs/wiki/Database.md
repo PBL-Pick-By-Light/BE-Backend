@@ -1,3 +1,5 @@
+# Database
+
 The Backend-Database uses MongoDB.
 It saves the entities the backend works with: users, items, positions, shelves, rooms, tags, settings and languages.
 ![databaseEntityRelationships](images/databaseEntityRelationships.jpg)

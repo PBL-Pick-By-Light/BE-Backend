@@ -1,3 +1,5 @@
+# Swagger
+
 [Swagger](https://swagger.io/tools/swagger-ui/) is a REST API Documentation tool that visualizes the API's resouces.
 It's implemented as a interactive and well-structured website.
 Swagger is configured in json-files.
