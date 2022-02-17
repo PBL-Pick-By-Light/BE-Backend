@@ -6,19 +6,19 @@ Controller for http requests regarding authentification.
 Connected to auth.router.
 
 ## [crud.controller](../../src/controllers/crud.controller.ts) (abstract)
- Abstract controller that provides functionalities of all controllers that implement this class correspond to the CRUD convention. (Crud: Create, Read, Update, Delete).
+ Abstract controller that provides functionality of all controllers that implement this class correspond to the CRUD convention. (Crud: Create, Read, Update, Delete).
 
 ## [index](../../src/controllers/index.ts)
 Contains all exports of this module.
 
 ## [item.controller](../../src/controllers/crud.controller.ts)
-Controller for all items, providing all CRUD functionalities for the item router using methods of item module.
+Controller for all items, providing all CRUD functionality for the item router using methods of item module.
 
 ## [label.controller](../../src/controllers/label.controller.ts)
-Controller for all labels, providing all functionalities e.g. (create, read, update, delete) for the label router using methods of label module.
+Controller for all labels, providing all functionality e.g. (create, read, update, delete) for the label router using methods of label module.
 
 ## [language.controller](../../src/controllers/language.controller.ts)
-Controller for all languages, providing all CRUD functionalities for the language router using methods of language module.
+Controller for all languages, providing all CRUD functionality for the language router using methods of language module.
 
 ## [light.controller](../../src/controllers/light.controller.ts)
 This Controller controls the light routes.
@@ -32,7 +32,7 @@ Class for actions triggered on Position docs in the DB.
 The functions are intended to be triggered via Router an therefore accept HTTP- Requests and Responses as parameter.
 
 ## [room.controller](../../src/controllers/room.controller.ts)
-Controller for all rooms, providing all functionalities e.g. (create, read, update, delete) for the room router using methods of room module.
+Controller for all rooms, providing all functionality e.g. (create, read, update, delete) for the room router using methods of room module.
 
 ## [settings.controller](../../src/controllers/settings.controller.ts)
 Controller for settings of the Pick-By-Light-Projekt

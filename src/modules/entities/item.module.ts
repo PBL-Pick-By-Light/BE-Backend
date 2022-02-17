@@ -6,7 +6,7 @@ import {printToConsole} from "../../modules/util/util.module";
 import mongoose from "mongoose";
 
 /**
- * Module for items, providing all item functionalities
+ * Module for items, providing all item functionality
  *     for item controller using methods of mongo module.
  */
 

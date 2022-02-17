@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import {printToConsole} from "../../modules/util/util.module";
 
 /**
- * Module for rooms, providing all roomId functionalities
+ * Module for rooms, providing all roomId functionality
  *     for roomId controller using methods of mongo module.
  */
 export class RoomModule extends EntityModule {

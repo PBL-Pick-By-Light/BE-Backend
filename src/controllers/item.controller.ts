@@ -10,7 +10,7 @@ import {printToConsole, fromJson} from"../modules/util/util.module";
 import mongoose from "mongoose";
 
 /**
- * Controller for all items, providing all CRUD functionalities
+ * Controller for all items, providing all CRUD functionality
  *     for the item router using methods of item module.
  */
 

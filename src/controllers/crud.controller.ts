@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 /**
- * Abstract controller that provides that functionalities of all controllers
+ * Abstract controller that provides that functionality of all controllers
  *     that implement this class correspond to the CRUD convention
  */
 

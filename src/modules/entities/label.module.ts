@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import {printToConsole} from "../util/util.module";
 
 /**
- * Module for labelIds, providing all label functionalities
+ * Module for labelIds, providing all label functionality
  *     for label controller using methods of mongo module.
  */
 export class LabelModule extends EntityModule {
