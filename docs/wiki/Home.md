@@ -6,11 +6,11 @@ For an overview about all Pick-By-Light-components, visit the [repositories desc
 ## Building and Configuration
 General information about building the backend can be found in the [Build Instructions](Build_Instructions.md).
 Also note the description of the [Configuration Files](Configuration Files.md).
-You can find a more detailed description of the docker configuration [here](Docker)
+You can find a more detailed description of the docker configuration [here](Docker.md)
 The database configuration can be found in the [Mongo](Mongo.md)-Chapter.
 
 ## Code
-To get a basic understanding of the Project structure, please read the [File Structure](File_Structure) documentation.
+To get a basic understanding of the Project structure, please read the [File Structure](File_Structure.md) documentation.
 
 More detailed explanation of the backend components can be found in the following chapters
 * [Database](Database.md)
