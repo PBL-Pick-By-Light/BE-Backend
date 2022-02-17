@@ -19,7 +19,7 @@ Start the server e.g. using
 npm run start
 ```
 
-To avoid duplikates first use
+To avoid duplicates first use
 ```
 npm run removeData
 ```
