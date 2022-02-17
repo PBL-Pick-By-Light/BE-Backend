@@ -14,7 +14,7 @@ This pick-by-light-project (alias pbl-project) is intended to enable people to b
 
 It was developed as a students project in the course “SWT-Projekt” at [Technische Hochschule Mittelhessen (THM)](https://www.thm.de/site/en/).
 
-**Documentation** can be found in [Project Wiki](https://github.com/PBL-Pick-By-Light/BE-Backend/-/wikis/home)
+**Documentation** can be found in [Project Wiki](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/docs/wiki/Home.md)
 
 ## Technologies
 

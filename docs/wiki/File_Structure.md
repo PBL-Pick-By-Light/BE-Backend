@@ -55,10 +55,10 @@
   * [README.md](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/docs/README.md)
   * [Repositories_Overview.md](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/docs/Repositories_Overview.md)
   * [databaseEntityRelationships.jpg](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/docs/databaseEntityRelationships.jpg)
-  * [databaseEntityRelationships.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/docs/wiki/images/databaseEntityRelationships.uxf)
+  * [databaseEntityRelationships.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/docs/wiki/images/databaseEntityRelationships.uxf)
   * [permissions.png](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/docs/permissions.png)
   * [searchItem.png](https://github.com/PBL-Pick-By-Light/BE-Backend/-/blob/development/docs/searchItem.png)
-  * [searchItem.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/docs/wiki/images/searchItem.uxf)
+  * [searchItem.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/docs/wiki/images/searchItem.uxf)
 * [src](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src) source code
   
   * [controllers](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/src/controllers)

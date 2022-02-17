@@ -6,7 +6,7 @@ It saves the entities the backend works with: users, items, positions, shelves, 
 [UMLet](https://www.umlet.com/)
 
 ### Code for UMLet
-[databaseEntityRelationships.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/blob/development/docs/wiki/images/databaseEntityRelationships.uxf)
+[databaseEntityRelationships.uxf](https://github.com/PBL-Pick-By-Light/BE-Backend/tree/main/docs/wiki/images/databaseEntityRelationships.uxf)
 
 ### Description
 * item: An item represents a product stored in a position in a shelf in a room.<br/>
